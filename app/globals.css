@@ -3,12 +3,14 @@
 /* SPEC §9. Значения предварительные, структура обязательна. */
 :root {
   --paper: #f2efe9;
+  /* Пара процентов темнее бумаги: подложка под изображение груза. */
+  --paper-shade: #eae6de;
   --ink: #1a1a18;
   --muted: #6b6862;
   --rule: #d6d1c7;
   --accent: #7b2d26;
 
-  --class-1: #8a867e;
+  --class-1: #4a4741;
   --class-2: #a87b2e;
   --class-3: #c2571f;
   --class-4: #7b2d26;
@@ -16,6 +18,7 @@
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-paper-shade: var(--paper-shade);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-rule: var(--rule);

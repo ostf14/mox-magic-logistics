@@ -36,20 +36,26 @@ export function Config() {
         <div>
           <label className="block">
             <span className="text-xs uppercase tracking-[0.14em] text-muted">Что доставляем</span>
-            <select
-              value={order.spellId}
-              onChange={(event) => selectSpell(event.target.value)}
-              className="mt-2 w-full border border-rule bg-paper px-3 py-2.5 text-sm text-ink focus:border-ink focus:outline-none"
-            >
-              {spells.map((spell) => {
-                const workshop = workshopById(spell.workshopId)
-                return (
-                  <option key={spell.id} value={spell.id}>
-                    {spell.name} — {workshop.name}
-                  </option>
-                )
-              })}
-            </select>
+            <span className="relative mt-2 block">
+              <select
+                value={order.spellId}
+                onChange={(event) => selectSpell(event.target.value)}
+                className="w-full appearance-none border border-rule bg-paper px-3 py-2.5 pr-10 text-sm text-ink focus:border-ink focus:outline-none"
+              >
+                {spells.map((spell) => {
+                  const workshop = workshopById(spell.workshopId)
+                  return (
+                    <option key={spell.id} value={spell.id}>
+                      {spell.name} — {workshop.name}
+                    </option>
+                  )
+                })}
+              </select>
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-4 top-1/2 -mt-1 h-1.5 w-1.5 -translate-y-1/2 rotate-45 border-b border-r border-muted"
+              />
+            </span>
           </label>
 
           <div className="mt-8">

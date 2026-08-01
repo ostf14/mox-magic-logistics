@@ -4,7 +4,7 @@ import { options, SERVICE_FEE } from '../data/options'
 import { spellById, spells } from '../data/spells'
 import { tariffById } from '../data/tariffs'
 import { workshops } from '../data/workshops'
-import { calcOrder, minutesUntilOpen } from './calcOrder'
+import { calcOrder, catalogMinutes, minutesUntilOpen } from './calcOrder'
 import { formatAbsolute } from './formatAbsolute'
 import { formatDuration } from './formatDuration'
 import { NOW, addMinutes, minutesOfDay } from './now'
@@ -85,6 +85,17 @@ describe('calcOrder — срок', () => {
 
     expect(calc.readyAt.toISOString()).toBe(addMinutes(NOW, 80).toISOString())
     expect(formatAbsolute(calc.readyAt)).toBe('сегодня, к 10:32')
+  })
+})
+
+describe('catalogMinutes', () => {
+  it('срок в карточке — только изготовление, доставка и ожидание не входят', () => {
+    for (const spell of spells) {
+      expect(catalogMinutes(spell)).toBe(spell.prepMinutes)
+    }
+    expect(formatDuration(catalogMinutes(spellById('cat')))).toBe('20 мин')
+    expect(formatDuration(catalogMinutes(spellById('swallow')))).toBe('8 ч')
+    expect(formatDuration(catalogMinutes(spellById('moondust')))).toBe('2 суток')
   })
 })
 

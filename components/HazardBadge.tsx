@@ -31,9 +31,9 @@ export function HazardBadge({ hazardClass }: { hazardClass: HazardClass }) {
       <button
         type="button"
         aria-label={hazardDescription(hazardClass)}
-        className={`inline-flex h-[1.2rem] w-[1.2rem] rotate-45 items-center justify-center border bg-paper focus:outline-none focus-visible:ring-1 focus-visible:ring-ink ${TONE[hazardClass]}`}
+        className={`inline-flex h-7 w-7 rotate-45 items-center justify-center border bg-paper focus:outline-none focus-visible:ring-1 focus-visible:ring-ink ${TONE[hazardClass]}`}
       >
-        <span className="-rotate-45 font-mono text-[0.5625rem] font-medium leading-none">
+        <span className="-rotate-45 font-mono text-[0.6875rem] font-medium leading-none tracking-tight">
           {ROMAN[hazardClass]}
         </span>
       </button>

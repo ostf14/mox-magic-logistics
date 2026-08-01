@@ -1,6 +1,6 @@
 import { SERVICE_FEE, SERVICE_FEE_LABEL, INSURANCE_OPTION_ID, options } from '../data/options'
 import { spellById } from '../data/spells'
-import { FOOT_TARIFF_ID, RECOMMENDED_TARIFF_ID, tariffById } from '../data/tariffs'
+import { FOOT_TARIFF_ID, tariffById } from '../data/tariffs'
 import { workshopById, type Workshop } from '../data/workshops'
 import type { Spell } from '../data/spells'
 import { MINUTES_IN_DAY, addMinutes, minutesOfDay } from './now'
@@ -43,12 +43,12 @@ export function minutesUntilOpen(workshop: Workshop, now: Date): number {
 }
 
 /**
- * Срок в карточке каталога: изготовление плюс конная доставка.
- * Ожидание открытия мастерской не входит намеренно — карточки сравниваются
+ * Срок в карточке каталога — только время изготовления. Доставка считается
+ * отдельно, ожидание открытия мастерской не входит: карточки сравниваются
  * по одному основанию, иначе цифра зависела бы от времени суток.
  */
 export function catalogMinutes(spell: Spell): number {
-  return spell.prepMinutes + tariffById(RECOMMENDED_TARIFF_ID).deliveryMinutes
+  return spell.prepMinutes
 }
 
 export function calcOrder(input: OrderInput): OrderCalc {

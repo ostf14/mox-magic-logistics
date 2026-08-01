@@ -8,7 +8,6 @@ import { formatPrice } from '@/lib/formatPrice'
 import { NOW, formatMinutesOfDay } from '@/lib/now'
 
 import { CargoImage } from './CargoImage'
-import { HazardBadge } from './HazardBadge'
 import { scrollToOrder, useOrder } from './order/OrderSection'
 
 const DOT = '·'
@@ -27,7 +26,12 @@ export function SpellCard({ spell }: { spell: Spell }) {
 
   return (
     <article className="flex flex-col border border-rule p-5">
-      <CargoImage id={spell.id} name={spell.name} />
+      <CargoImage
+        id={spell.id}
+        name={spell.name}
+        hazardClass={spell.hazardClass}
+        city={workshop.city}
+      />
 
       <h3 className="mt-5 text-lg font-medium text-ink">{spell.name}</h3>
       <p className="mt-1 text-xs text-muted">
@@ -47,8 +51,6 @@ export function SpellCard({ spell }: { spell: Spell }) {
       </dl>
 
       <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-rule pt-4 text-xs text-muted">
-        <HazardBadge hazardClass={spell.hazardClass} />
-        <span className="text-rule">{DOT}</span>
         <span>готовится {formatDuration(catalogMinutes(spell))}</span>
         <span className="text-rule">{DOT}</span>
         <span className="font-mono text-ink">{formatPrice(spell.price)}</span>

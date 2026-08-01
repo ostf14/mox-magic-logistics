@@ -20,7 +20,8 @@ export function Catalog() {
           Каталог заклинаний
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-          Мастерские готовят, мы везём. Сроки в карточках указаны при конной доставке.
+          Мастерские готовят, мы везём. Сроки в карточках — время изготовления. Доставка считается
+          отдельно.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -45,11 +46,7 @@ export function Catalog() {
               type="button"
               onClick={() => setHazardClass(null)}
               aria-pressed={hazardClass === null}
-              className={`border px-3 py-1 text-xs ${
-                hazardClass === null
-                  ? 'border-ink bg-ink text-paper'
-                  : 'border-rule text-ink hover:border-ink'
-              }`}
+              className="px-1 py-1 text-xs text-muted underline underline-offset-4 hover:text-ink"
             >
               Показать все
             </button>
