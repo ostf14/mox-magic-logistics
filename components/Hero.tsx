@@ -27,7 +27,7 @@ export function Hero() {
           Ближайшая доставка — через час.
         </p>
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-9">
           <button
             type="button"
             onClick={scrollToOrder}
@@ -35,12 +35,6 @@ export function Hero() {
           >
             Оформить доставку
           </button>
-          <a
-            href="#catalog"
-            className="border border-rule px-6 py-3 text-center text-sm text-ink hover:border-ink"
-          >
-            Смотреть каталог
-          </a>
         </div>
 
         <form onSubmit={handleTrack} className="mt-10 max-w-md">

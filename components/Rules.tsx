@@ -21,7 +21,7 @@ export function Rules() {
           Правила безопасного применения
         </h2>
         <p className="mt-3 text-sm text-muted">
-          Редакция от 12 октября. Действуют для всех отправлений.
+          Редакция от 14 июля. Действуют для всех отправлений.
         </p>
 
         <ol className="mt-9 grid list-outside list-decimal gap-x-12 pl-6 md:grid-cols-2">
