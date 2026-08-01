@@ -13,7 +13,7 @@ export function Tariffs() {
           Срок считается от момента, когда мастерская передала заклинание курьеру.
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+        <div className="mt-8 grid gap-px border border-rule bg-rule sm:grid-cols-2 md:grid-cols-4">
           {tariffs.map((tariff) => (
             <TariffCard
               key={tariff.id}

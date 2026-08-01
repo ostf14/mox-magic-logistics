@@ -21,7 +21,7 @@ const ROWS = 'grid-rows-[1.75rem_1.5rem_2.5rem_auto]'
 /** Статичная плитка для блока тарифов: витрина, а не выбор. */
 export function TariffCard({ tariff, recommended = false }: { tariff: Tariff; recommended?: boolean }) {
   return (
-    <div className={`grid h-full ${ROWS} content-start gap-y-1 border border-rule p-4`}>
+    <div className={`grid h-full ${ROWS} content-start gap-y-1 bg-paper p-4`}>
       <span className="flex items-start justify-between gap-3">
         <span className="text-base font-medium leading-tight text-ink">{tariff.name}</span>
         {recommended && (
