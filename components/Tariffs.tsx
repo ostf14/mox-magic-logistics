@@ -1,18 +1,8 @@
-'use client'
-
 import { RECOMMENDED_TARIFF_ID, tariffs } from '@/data/tariffs'
 
-import { TariffTile } from './TariffTile'
-import { scrollToOrder, useOrder } from './order/OrderSection'
+import { TariffCard } from './TariffTile'
 
 export function Tariffs() {
-  const { order, selectTariff } = useOrder()
-
-  function handleSelect(tariffId: string) {
-    selectTariff(tariffId)
-    scrollToOrder()
-  }
-
   return (
     <section id="tariffs" className="border-t border-rule">
       <div className="mx-auto w-full max-w-[76rem] px-5 py-14 md:px-8 md:py-20">
@@ -25,12 +15,10 @@ export function Tariffs() {
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
           {tariffs.map((tariff) => (
-            <TariffTile
+            <TariffCard
               key={tariff.id}
               tariff={tariff}
               recommended={tariff.id === RECOMMENDED_TARIFF_ID}
-              selected={order.tariffId === tariff.id}
-              onSelect={handleSelect}
             />
           ))}
         </div>

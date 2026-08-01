@@ -14,6 +14,14 @@
   --class-2: #8a6a1f;
   --class-3: #c2571f;
   --class-4: #7b2d26;
+
+  /* Шторка ворклога. Внутри неё правила §9 по цветам не действуют. */
+  --terminal-bg: #141412;
+  --terminal-text: #ccff00;
+  --terminal-muted: #8a9a55;
+
+  /* Высота шапки: первый экран занимает вьюпорт за её вычетом. */
+  --header-height: 5rem;
 }
 
 @theme inline {
@@ -29,6 +37,10 @@
   --color-class-3: var(--class-3);
   --color-class-4: var(--class-4);
 
+  --color-terminal-bg: var(--terminal-bg);
+  --color-terminal-text: var(--terminal-text);
+  --color-terminal-muted: var(--terminal-muted);
+
   --font-sans: var(--font-ui);
   --font-mono: var(--font-numeric);
 
@@ -41,24 +53,4 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
-}
-
-/* Бегущая строка операционной сводки. Лента продублирована, сдвиг на половину. */
-@keyframes ticker {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.ticker-track {
-  animation: ticker 64s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track {
-    animation: none;
-  }
 }

@@ -8,6 +8,8 @@ type CargoImageProps = {
   hazardClass: HazardClass
   city?: string
   src?: string
+  /** Мини-бирка: только полоса с ромбом и кодом, без области изображения. */
+  compact?: boolean
 }
 
 const BAR_GROUPS = 7
@@ -50,7 +52,18 @@ function barcode(id: string): string {
  * Почтовая бирка груза. Пропс src готов принять изображение;
  * без него страница обязана выглядеть законченной.
  */
-export function CargoImage({ id, name, hazardClass, city, src }: CargoImageProps) {
+export function CargoImage({ id, name, hazardClass, city, src, compact }: CargoImageProps) {
+  if (compact) {
+    return (
+      <figure className="flex shrink-0 items-center gap-3 border border-rule px-3 py-2">
+        <HazardBadge hazardClass={hazardClass} />
+        <figcaption className="font-mono text-[0.6875rem] tracking-wider text-ink">
+          PL-CARGO-{id.toUpperCase()}
+        </figcaption>
+      </figure>
+    )
+  }
+
   return (
     <figure className="border border-rule">
       <div className="relative aspect-[5/2] w-full overflow-hidden bg-paper-shade">

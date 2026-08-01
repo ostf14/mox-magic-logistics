@@ -1,114 +1,183 @@
-import { formatDate } from '@/lib/formatAbsolute'
-import { NOW } from '@/lib/now'
+'use client'
 
-const DOCUMENT_NUMBER = 'PL-0000-0001'
-/** Прочерк в незаполненной графе накладной. */
-const EMPTY = '—'
+import { useEffect, useRef, useState } from 'react'
 
-const COLUMNS = ['№', 'Этап', 'Инструмент', 'Что сделал AI', 'Что доработал руками']
+const PANEL_LABEL = 'AI Worklog'
+const COMMAND = '$ cat worklog.md'
+/** Заглушка: содержимое лога заполняется отдельно. */
+const STUB = '—'
+const STUB_TIME = '--:--'
 
-const STAGES = [
-  { number: '01', title: 'Концепция и позиционирование' },
-  { number: '02', title: 'Тексты и микрокопии' },
-  { number: '03', title: 'Информационная архитектура' },
-  { number: '04', title: 'Визуальное направление и типографика' },
-  { number: '05', title: 'Сборка интерфейса' },
-  { number: '06', title: 'Изображения груза' },
-  { number: '07', title: 'Проверка и адаптив' },
+type LogEntry = {
+  time: string
+  stage: string
+  env: string
+  lines: string[]
+}
+
+const ENTRIES: LogEntry[] = [
+  { time: STUB_TIME, stage: 'concept', env: STUB, lines: [STUB, STUB] },
+  { time: STUB_TIME, stage: 'copy', env: STUB, lines: [STUB, STUB] },
+  { time: STUB_TIME, stage: 'ia', env: STUB, lines: [STUB, STUB] },
+  { time: STUB_TIME, stage: 'visual', env: STUB, lines: [STUB, STUB] },
+  { time: STUB_TIME, stage: 'build', env: STUB, lines: [STUB, STUB] },
+  { time: STUB_TIME, stage: 'cargo', env: STUB, lines: [STUB, STUB] },
+  { time: STUB_TIME, stage: 'qa', env: STUB, lines: [STUB, STUB] },
 ]
 
-const STACK = [
-  { label: 'Фреймворк', value: 'Next.js 15, App Router · TypeScript · Tailwind v4' },
-  { label: 'Хостинг', value: 'Vercel, сборка с main' },
-  { label: 'Шрифты', value: 'IBM Plex Sans и IBM Plex Mono через next/font/google' },
+const SECTIONS: { title: string; lines: string[] }[] = [
+  {
+    title: '## СТЕК',
+    lines: [
+      'Next.js 15, App Router · TypeScript · Tailwind v4',
+      'Vercel, сборка с main',
+      'IBM Plex Sans и IBM Plex Mono через next/font/google',
+    ],
+  },
+  { title: '## ХАРНЕС', lines: [STUB, STUB, STUB] },
+  { title: '## ПРОМТЫ', lines: [STUB, STUB, STUB] },
 ]
 
-const HARNESS = [
-  { label: 'Скиллы', value: EMPTY },
-  { label: 'MCP-коннекторы', value: EMPTY },
-  { label: 'Плагины', value: EMPTY },
-]
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-const PROMPTS = [
-  { label: 'Чекпоинт 1', value: EMPTY },
-  { label: 'Чекпоинт 2', value: EMPTY },
-  { label: 'Чекпоинт 3', value: EMPTY },
-  { label: 'Чекпоинт 4', value: EMPTY },
-]
-
-function Block({
-  title,
-  rows,
-}: {
-  title: string
-  rows: { label: string; value: string }[]
-}) {
+function Line({ text }: { text: string }) {
   return (
-    <section>
-      <h3 className="text-xs uppercase tracking-[0.14em] text-muted">{title}</h3>
-      <dl className="mt-3 border-t border-rule">
-        {rows.map((row) => (
-          <div key={row.label} className="border-b border-rule py-3">
-            <dt className="text-sm text-muted">{row.label}</dt>
-            <dd className="mt-1 text-sm leading-relaxed text-ink">{row.value}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
+    <p className="flex gap-2 pl-[7rem] text-terminal-muted">
+      <span aria-hidden>─</span>
+      <span>{text}</span>
+    </p>
   )
 }
 
 export function Worklog() {
+  const [open, setOpen] = useState(false)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const tabRef = useRef<HTMLButtonElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+
+  function close() {
+    setOpen(false)
+    tabRef.current?.focus()
+  }
+
+  useEffect(() => {
+    if (!open) return
+
+    closeRef.current?.focus()
+    document.body.style.overflow = 'hidden'
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        tabRef.current?.focus()
+        return
+      }
+      if (event.key !== 'Tab') return
+
+      const panel = panelRef.current
+      if (!panel) return
+
+      const focusable = [...panel.querySelectorAll<HTMLElement>(FOCUSABLE)]
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
   return (
-    <section id="worklog" className="border-t border-rule">
-      <div className="mx-auto w-full max-w-[76rem] px-5 py-14 md:px-8 md:py-20">
-        <div className="flex flex-col gap-3 border-b border-rule pb-5 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
-              Накладная на выполненные работы
-            </h2>
-            <p className="mt-3 text-sm text-muted">
-              Отправление {DOCUMENT_NUMBER} · тестовое задание MOX
-            </p>
+    <>
+      <div
+        aria-hidden={!open}
+        onClick={close}
+        className={`fixed inset-0 z-40 bg-ink/50 transition-opacity duration-300 ${
+          open ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      />
+
+      <div
+        className={`fixed inset-y-0 right-0 z-50 flex transition-transform duration-300 ${
+          open ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <button
+          ref={tabRef}
+          type="button"
+          onClick={() => setOpen((current) => !current)}
+          aria-expanded={open}
+          className="absolute right-full top-1/2 -translate-y-1/2 bg-terminal-text px-2 py-5 font-mono text-[0.6875rem] uppercase tracking-[0.3em] text-ink [writing-mode:vertical-rl] rotate-180"
+        >
+          {PANEL_LABEL}
+        </button>
+
+        <div
+          ref={panelRef}
+          inert={!open}
+          role="dialog"
+          aria-modal="true"
+          aria-label={PANEL_LABEL}
+          className="h-full w-screen overflow-y-auto bg-terminal-bg px-5 py-6 font-mono text-xs leading-relaxed text-terminal-text md:w-[40rem] md:px-8"
+        >
+          <div className="flex items-start justify-between gap-6">
+            <p>{COMMAND}</p>
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={close}
+              className="shrink-0 border border-terminal-muted px-2 py-1 uppercase tracking-[0.2em] text-terminal-muted hover:text-terminal-text"
+            >
+              esc
+            </button>
           </div>
-          <p className="font-mono text-sm text-muted">{formatDate(NOW)}</p>
-        </div>
 
-        <div className="mt-8 overflow-x-auto">
-          <table className="w-full min-w-[52rem] border-collapse text-left">
-            <thead>
-              <tr className="border-b border-rule">
-                {COLUMNS.map((column) => (
-                  <th
-                    key={column}
-                    scope="col"
-                    className="py-2 pr-6 text-xs font-medium uppercase tracking-[0.14em] text-muted"
-                  >
-                    {column}
-                  </th>
+          <div className="mt-8 space-y-6">
+            {ENTRIES.map((entry) => (
+              <div key={entry.stage}>
+                <p className="flex flex-wrap gap-x-6">
+                  <span className="w-[5.5rem] shrink-0">[{entry.time}]</span>
+                  <span className="w-40 shrink-0">{entry.stage}</span>
+                  <span className="text-terminal-muted">{entry.env}</span>
+                </p>
+                {entry.lines.map((line, index) => (
+                  <Line key={`${entry.stage}-${index}`} text={line} />
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {STAGES.map((stage) => (
-                <tr key={stage.number} className="border-b border-rule align-top">
-                  <td className="w-10 py-3 pr-6 font-mono text-sm text-muted">{stage.number}</td>
-                  <td className="w-64 py-3 pr-6 text-sm text-ink">{stage.title}</td>
-                  <td className="w-48 py-3 pr-6 text-sm text-muted">{EMPTY}</td>
-                  <td className="py-3 pr-6 text-sm text-muted">{EMPTY}</td>
-                  <td className="py-3 text-sm text-muted">{EMPTY}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </div>
+            ))}
+          </div>
 
-        <div className="mt-10 grid gap-10 md:grid-cols-3">
-          <Block title="Стек" rows={STACK} />
-          <Block title="Харнес" rows={HARNESS} />
-          <Block title="Промты" rows={PROMPTS} />
+          <div className="mt-10 space-y-6">
+            {SECTIONS.map((section) => (
+              <div key={section.title}>
+                <p className="text-terminal-muted">{section.title}</p>
+                <div className="mt-2">
+                  {section.lines.map((line, index) => (
+                    <p key={`${section.title}-${index}`} className="flex gap-2 text-terminal-text">
+                      <span aria-hidden className="text-terminal-muted">
+                        ─
+                      </span>
+                      <span>{line}</span>
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </section>
+    </>
   )
 }

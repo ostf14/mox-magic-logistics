@@ -1,8 +1,9 @@
 'use client'
 
+import { CargoImage } from '@/components/CargoImage'
 import { TariffTile } from '@/components/TariffTile'
 import { options } from '@/data/options'
-import { spellById, spells } from '@/data/spells'
+import { spellById } from '@/data/spells'
 import { RECOMMENDED_TARIFF_ID, tariffs } from '@/data/tariffs'
 import { workshopById } from '@/data/workshops'
 import { calcOrder } from '@/lib/calcOrder'
@@ -13,9 +14,14 @@ import { Summary, SummaryBar } from './Summary'
 import { useOrder } from './OrderSection'
 
 const FREE = 0
+const CATALOG_ID = 'catalog'
+
+function scrollToCatalog() {
+  document.getElementById(CATALOG_ID)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 
 export function Config() {
-  const { order, selectSpell, selectTariff, toggleOption, goToForm } = useOrder()
+  const { order, selectTariff, toggleOption, goToForm } = useOrder()
   const calc = calcOrder({
     spellId: order.spellId,
     tariffId: order.tariffId,
@@ -24,6 +30,7 @@ export function Config() {
   })
 
   const spell = spellById(order.spellId)
+  const workshop = workshopById(spell.workshopId)
   const hasBlockedTariff = calc.blockedTariffIds.length > FREE
 
   return (
@@ -35,30 +42,39 @@ export function Config() {
 
       <div className="mt-9 grid gap-10 md:grid-cols-[minmax(0,1fr)_21rem]">
         <div>
-          <label className="block">
-            <span className="text-xs uppercase tracking-[0.14em] text-muted">Что доставляем</span>
-            <span className="relative mt-2 block">
-              <select
-                value={order.spellId}
-                onChange={(event) => selectSpell(event.target.value)}
-                className="w-full appearance-none border border-rule bg-paper px-3 py-2.5 pr-10 text-sm text-ink focus:border-ink focus:outline-none"
-              >
-                {spells.map((spell) => {
-                  const workshop = workshopById(spell.workshopId)
-                  return (
-                    <option key={spell.id} value={spell.id}>
-                      {spell.name} — {workshop.name}
-                    </option>
-                  )
-                })}
-              </select>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-4 top-1/2 -mt-1 h-1.5 w-1.5 -translate-y-1/2 rotate-45 border-b border-r border-muted"
-              />
-            </span>
-          </label>
-          <p className="mt-2 text-xs leading-relaxed text-muted">{spell.situation}</p>
+          <span className="text-xs uppercase tracking-[0.14em] text-muted">Что доставляем</span>
+          <div className="mt-2 border border-rule p-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex min-w-0 items-start gap-4">
+                <CargoImage
+                  compact
+                  id={spell.id}
+                  name={spell.name}
+                  hazardClass={spell.hazardClass}
+                />
+                <span className="min-w-0">
+                  <span className="block text-base font-medium text-ink">{spell.name}</span>
+                  <span className="mt-1 block text-xs text-muted">
+                    {workshop.name}
+                    {workshop.city ? `, ${workshop.city}` : ''}
+                  </span>
+                </span>
+              </div>
+
+              <div className="flex shrink-0 flex-col items-end gap-2">
+                <button
+                  type="button"
+                  onClick={scrollToCatalog}
+                  className="text-xs text-muted underline underline-offset-4 hover:text-ink"
+                >
+                  Выбрать другое
+                </button>
+                <span className="font-mono text-sm text-ink">{formatPrice(spell.price)}</span>
+              </div>
+            </div>
+
+            <p className="mt-3 text-xs leading-relaxed text-muted">{spell.situation}</p>
+          </div>
 
           <div className="mt-8">
             <span className="text-xs uppercase tracking-[0.14em] text-muted">Тариф доставки</span>

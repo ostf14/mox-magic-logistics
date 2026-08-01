@@ -5,7 +5,6 @@ import { Hero } from '@/components/Hero'
 import { HowItWorks } from '@/components/HowItWorks'
 import { Rules } from '@/components/Rules'
 import { Tariffs } from '@/components/Tariffs'
-import { Ticker } from '@/components/Ticker'
 import { Worklog } from '@/components/Worklog'
 import { OrderProvider, OrderSection } from '@/components/order/OrderSection'
 
@@ -15,15 +14,14 @@ export default function Page() {
       <Header />
       <main>
         <Hero />
-        <Ticker />
         <Tariffs />
         <Catalog />
         <OrderSection />
         <HowItWorks />
         <Rules />
-        <Worklog />
       </main>
       <Footer />
+      <Worklog />
     </OrderProvider>
   )
 }
