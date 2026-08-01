@@ -31,6 +31,7 @@ export function SpellCard({ spell }: { spell: Spell }) {
         name={spell.name}
         hazardClass={spell.hazardClass}
         city={workshop.city}
+        src={spell.image}
       />
 
       <h3 className="mt-5 text-lg font-medium text-ink">{spell.name}</h3>

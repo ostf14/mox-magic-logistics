@@ -1,6 +1,13 @@
+import Image from 'next/image'
+
 import type { HazardClass } from '@/data/spells'
 
 import { HazardBadge } from './HazardBadge'
+
+/** Размеры обработанных файлов в public/cargo. */
+const IMAGE_WIDTH = 1200
+const IMAGE_HEIGHT = 600
+const IMAGE_SIZES = '(max-width: 768px) 100vw, 33vw'
 
 type CargoImageProps = {
   id: string
@@ -66,10 +73,16 @@ export function CargoImage({ id, name, hazardClass, city, src, compact }: CargoI
 
   return (
     <figure className="border border-rule">
-      <div className="relative aspect-[5/2] w-full overflow-hidden bg-paper-shade">
+      <div className="relative aspect-[2/1] w-full overflow-hidden bg-paper-shade">
         {src && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={src} alt={name} className="absolute inset-0 h-full w-full object-cover" />
+          <Image
+            src={src}
+            alt={name}
+            width={IMAGE_WIDTH}
+            height={IMAGE_HEIGHT}
+            sizes={IMAGE_SIZES}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
         )}
       </div>
 

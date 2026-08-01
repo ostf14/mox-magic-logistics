@@ -10,6 +10,8 @@ export type Spell = {
   prepMinutes: number
   price: number
   stock?: number
+  /** Путь к обработанному изображению груза в public/cargo. */
+  image?: string
   /** Примечание в карточке, если есть. Текст из CONTENT.md. */
   note?: string
 }
@@ -24,6 +26,7 @@ export const spells: Spell[] = [
     hazardClass: 1,
     prepMinutes: 20,
     price: 45,
+    image: '/cargo/cat.webp',
   },
   {
     id: 'oriole',
@@ -34,6 +37,7 @@ export const spells: Spell[] = [
     hazardClass: 1,
     prepMinutes: 40,
     price: 60,
+    image: '/cargo/oriole.webp',
     stock: 3,
   },
   {
@@ -45,6 +49,7 @@ export const spells: Spell[] = [
     hazardClass: 2,
     prepMinutes: 120,
     price: 180,
+    image: '/cargo/thunder.webp',
   },
   {
     id: 'whitehoney',
@@ -55,6 +60,7 @@ export const spells: Spell[] = [
     hazardClass: 2,
     prepMinutes: 180,
     price: 210,
+    image: '/cargo/whitehoney.webp',
   },
   {
     id: 'swallow',
@@ -65,6 +71,7 @@ export const spells: Spell[] = [
     hazardClass: 3,
     prepMinutes: 480,
     price: 340,
+    image: '/cargo/swallow.webp',
   },
   {
     id: 'moondust',
@@ -75,6 +82,7 @@ export const spells: Spell[] = [
     hazardClass: 4,
     prepMinutes: 2880,
     price: 890,
+    image: '/cargo/moondust.webp',
     note: 'пешая доставка недоступна, сопровождение обязательно',
   },
 ]
