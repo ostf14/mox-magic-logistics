@@ -4,6 +4,12 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 
 import { spells } from '@/data/spells'
 import { RECOMMENDED_TARIFF_ID } from '@/data/tariffs'
+import { calcOrder } from '@/lib/calcOrder'
+import { NOW } from '@/lib/now'
+
+import { Config } from './Config'
+import { Form } from './Form'
+import { Tracking } from './Tracking'
 
 export const ORDER_SECTION_ID = 'order'
 
@@ -67,7 +73,21 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const api: OrderApi = {
     order,
-    selectSpell: (spellId) => setOrder((current) => ({ ...current, spellId, view: 'config' })),
+    selectSpell: (spellId) =>
+      setOrder((current) => {
+        // Новое заклинание может запрещать выбранный тариф: тогда возвращаемся к конной.
+        const probe = calcOrder({
+          spellId,
+          tariffId: current.tariffId,
+          optionIds: current.optionIds,
+          now: NOW,
+        })
+        const tariffId = probe.blockedTariffIds.includes(current.tariffId)
+          ? RECOMMENDED_TARIFF_ID
+          : current.tariffId
+
+        return { ...current, spellId, tariffId, view: 'config' }
+      }),
     selectTariff: (tariffId) => setOrder((current) => ({ ...current, tariffId, view: 'config' })),
     toggleOption: (optionId) =>
       setOrder((current) => ({
@@ -89,6 +109,15 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 }
 
 export function OrderSection() {
-  // Config, Form, Tracking и Summary собираются на шагах 7–9 (SPEC §12).
-  return <section id={ORDER_SECTION_ID} className="border-t border-rule" />
+  const { order } = useOrder()
+
+  return (
+    <section id={ORDER_SECTION_ID} className="border-t border-rule">
+      <div className="mx-auto w-full max-w-[76rem] px-5 py-14 md:min-h-[42rem] md:px-8 md:py-20">
+        {order.view === 'config' && <Config />}
+        {order.view === 'form' && <Form />}
+        {order.view === 'tracking' && <Tracking />}
+      </div>
+    </section>
+  )
 }

@@ -30,7 +30,9 @@ export function TariffTile({
       } ${disabled ? 'cursor-not-allowed text-muted' : 'hover:border-ink'}`}
     >
       <span className="flex items-baseline justify-between gap-3">
-        <span className="text-base font-medium text-ink">{tariff.name}</span>
+        <span className={`text-base font-medium ${disabled ? 'text-muted' : 'text-ink'}`}>
+          {tariff.name}
+        </span>
         {recommended && (
           <span className="border border-accent px-1.5 py-0.5 text-[0.625rem] uppercase tracking-[0.12em] text-accent">
             рекомендуем
@@ -38,12 +40,16 @@ export function TariffTile({
         )}
       </span>
 
-      <span className="mt-3 font-mono text-sm text-ink">
+      <span className={`mt-3 font-mono text-sm ${disabled ? 'text-muted' : 'text-ink'}`}>
         {formatDuration(tariff.deliveryMinutes)}
       </span>
       <span className="mt-1 text-xs leading-relaxed text-muted">{tariff.method}</span>
 
-      <span className="mt-4 border-t border-rule pt-3 font-mono text-sm text-ink">
+      <span
+        className={`mt-4 border-t border-rule pt-3 font-mono text-sm ${
+          disabled ? 'text-muted' : 'text-ink'
+        }`}
+      >
         {formatPrice(tariff.price)}
       </span>
 
