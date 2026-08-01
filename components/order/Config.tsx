@@ -4,7 +4,7 @@ import { CargoImage } from '@/components/CargoImage'
 import { TariffTile } from '@/components/TariffTile'
 import { options } from '@/data/options'
 import { spellById } from '@/data/spells'
-import { tariffs } from '@/data/tariffs'
+import { RECOMMENDED_TARIFF_ID, tariffs } from '@/data/tariffs'
 import { workshopById } from '@/data/workshops'
 import { calcOrder } from '@/lib/calcOrder'
 import { formatPrice } from '@/lib/formatPrice'
@@ -80,6 +80,7 @@ export function Config() {
                 <TariffTile
                   key={tariff.id}
                   tariff={tariff}
+                  recommended={tariff.id === RECOMMENDED_TARIFF_ID}
                   selected={order.tariffId === tariff.id}
                   disabled={calc.blockedTariffIds.includes(tariff.id)}
                   onSelect={selectTariff}

@@ -13,10 +13,11 @@ type TariffTileProps = {
 }
 
 /**
- * Строки плитки заданы жёстко: название, срок, способ и цена выравниваются
- * по одним линиям во всех четырёх плитках, как бы ни был длинен способ.
+ * Строки плитки заданы жёстко: название, бейдж, срок, способ и цена
+ * выравниваются по одним линиям во всех четырёх плитках. Строка бейджа есть
+ * и там, где бейджа нет, — иначе плитки разъезжаются по ширине.
  */
-const ROWS = 'grid-rows-[2rem_1.5rem_2.5rem_auto]'
+const ROWS = 'grid-rows-[2rem_1.5rem_1.5rem_2.5rem_auto]'
 
 function Recommended() {
   return (
@@ -44,10 +45,9 @@ export function TariffCard({
 }) {
   return (
     <div className={`grid h-full ${ROWS} content-start gap-y-1 bg-card p-4`}>
-      <span className="flex items-start justify-between gap-3">
-        <span className="text-lg font-medium leading-tight text-ink">{tariff.name}</span>
-        {recommended && <Recommended />}
-      </span>
+      <span className="text-lg font-medium leading-tight text-ink">{tariff.name}</span>
+
+      <span className="flex items-start">{recommended && <Recommended />}</span>
 
       <span className="font-mono text-xs leading-6 text-muted">
         {formatDuration(tariff.deliveryMinutes)}
@@ -82,10 +82,9 @@ export function TariffTile({
         selected ? 'border-ink' : 'border-rule'
       } ${disabled ? 'cursor-not-allowed' : 'hover:border-ink'}`}
     >
-      <span className="flex items-start justify-between gap-3">
-        <span className={`text-lg font-medium leading-tight ${tone}`}>{tariff.name}</span>
-        {recommended && <Recommended />}
-      </span>
+      <span className={`text-lg font-medium leading-tight ${tone}`}>{tariff.name}</span>
+
+      <span className="flex items-start">{recommended && <Recommended />}</span>
 
       <span className="font-mono text-xs leading-6 text-muted">
         {formatDuration(tariff.deliveryMinutes)}
