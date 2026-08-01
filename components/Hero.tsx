@@ -1,8 +1,19 @@
 'use client'
 
-import { scrollToOrder } from './order/OrderSection'
+import { useState, type FormEvent } from 'react'
+
+import { scrollToOrder, useOrder } from './order/OrderSection'
 
 export function Hero() {
+  const { track } = useOrder()
+  const [trackingNumber, setTrackingNumber] = useState('')
+
+  function handleTrack(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    track(trackingNumber)
+    scrollToOrder()
+  }
+
   return (
     <section id="top" className="border-b border-rule">
       <div className="mx-auto w-full max-w-[76rem] px-5 py-14 md:px-8 md:py-24">
@@ -31,6 +42,25 @@ export function Hero() {
             Смотреть каталог
           </a>
         </div>
+
+        <form onSubmit={handleTrack} className="mt-10 max-w-md">
+          <div className="flex items-stretch border border-rule bg-paper">
+            <input
+              value={trackingNumber}
+              onChange={(event) => setTrackingNumber(event.target.value)}
+              placeholder="PL-0000-0000"
+              aria-label="Трек-номер"
+              className="w-full bg-transparent px-4 py-3 font-mono text-sm text-ink placeholder:text-muted focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="shrink-0 border-l border-rule px-5 py-3 text-sm text-ink hover:bg-ink hover:text-paper"
+            >
+              Отследить
+            </button>
+          </div>
+          <p className="mt-2 text-xs text-muted">Например: PL-4471-0293</p>
+        </form>
       </div>
     </section>
   )

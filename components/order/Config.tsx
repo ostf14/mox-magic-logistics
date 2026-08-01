@@ -2,7 +2,7 @@
 
 import { TariffTile } from '@/components/TariffTile'
 import { options } from '@/data/options'
-import { spells } from '@/data/spells'
+import { spellById, spells } from '@/data/spells'
 import { RECOMMENDED_TARIFF_ID, tariffs } from '@/data/tariffs'
 import { workshopById } from '@/data/workshops'
 import { calcOrder } from '@/lib/calcOrder'
@@ -23,6 +23,7 @@ export function Config() {
     now: NOW,
   })
 
+  const spell = spellById(order.spellId)
   const hasBlockedTariff = calc.blockedTariffIds.length > FREE
 
   return (
@@ -57,6 +58,7 @@ export function Config() {
               />
             </span>
           </label>
+          <p className="mt-2 text-xs leading-relaxed text-muted">{spell.situation}</p>
 
           <div className="mt-8">
             <span className="text-xs uppercase tracking-[0.14em] text-muted">Тариф доставки</span>

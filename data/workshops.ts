@@ -16,7 +16,7 @@ export const workshops: Workshop[] = [
     closesAt: 1440,
   },
   { id: 'wimmer', name: 'Мастерская Виммера', city: 'Вызима', opensAt: 420, closesAt: 1140 },
-  { id: 'banard', name: 'Лаборатория Бан Ард', city: '', opensAt: 960, closesAt: 1440 },
+  { id: 'banard', name: 'Лаборатория Бан Ард', city: 'Каэдвен', opensAt: 960, closesAt: 1440 },
   { id: 'loantil', name: 'Мастерская Ло-Антиль', city: 'Горс Велен', opensAt: 0, closesAt: 1440 },
 ]
 

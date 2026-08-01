@@ -39,16 +39,8 @@ export function SpellCard({ spell }: { spell: Spell }) {
         {workshop.city ? `, ${workshop.city}` : ''}
       </p>
 
-      <dl className="mt-4 space-y-2 text-sm leading-relaxed">
-        <div>
-          <dt className="inline text-muted">Ситуация: </dt>
-          <dd className="inline text-ink">{spell.situation}</dd>
-        </div>
-        <div>
-          <dt className="inline text-muted">Эффект: </dt>
-          <dd className="inline text-ink">{spell.effect}</dd>
-        </div>
-      </dl>
+      {/* Ситуация в карточке не показывается — она выводится в конфигураторе. */}
+      <p className="mt-4 text-sm leading-relaxed text-ink">{spell.effect}</p>
 
       <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-rule pt-4 text-xs text-muted">
         <span>готовится {formatDuration(catalogMinutes(spell))}</span>

@@ -53,6 +53,8 @@ type OrderApi = {
   goToConfig: () => void
   submit: () => void
   reset: () => void
+  /** Поиск по трек-номеру из первого экрана: открывает секцию в состоянии трекинга. */
+  track: (trackingNumber: string) => void
 }
 
 const OrderContext = createContext<OrderApi | null>(null)
@@ -103,6 +105,12 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     submit: () =>
       setOrder((current) => ({ ...current, view: 'tracking', trackingNumber: TRACKING_NUMBER })),
     reset: () => setOrder(initialOrder),
+    track: (trackingNumber) =>
+      setOrder((current) => ({
+        ...current,
+        view: 'tracking',
+        trackingNumber: trackingNumber.trim().toUpperCase() || TRACKING_NUMBER,
+      })),
   }
 
   return <OrderContext.Provider value={api}>{children}</OrderContext.Provider>
