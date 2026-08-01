@@ -86,7 +86,7 @@ export function CargoImage({ id, name, hazardClass, src, badge, compact }: Cargo
       )}
 
       {badge && (
-        <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] border border-rule bg-paper/85 px-2 py-1 text-xs leading-tight text-ink">
+        <span className="absolute left-3 top-3 max-w-[66%] truncate whitespace-nowrap border border-rule bg-paper/85 px-2 py-1 text-xs leading-tight text-ink">
           {badge}
         </span>
       )}

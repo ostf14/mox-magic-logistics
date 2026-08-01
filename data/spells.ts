@@ -83,7 +83,7 @@ export const spells: Spell[] = [
     prepMinutes: 2880,
     price: 890,
     image: '/cargo/moondust.webp',
-    note: 'пешая доставка недоступна, сопровождение обязательно',
+    note: 'Только с сопровождением',
   },
 ]
 
