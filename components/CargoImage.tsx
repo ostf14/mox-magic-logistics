@@ -9,16 +9,6 @@ const IMAGE_WIDTH = 1200
 const IMAGE_HEIGHT = 600
 const IMAGE_SIZES = '(max-width: 768px) 100vw, 33vw'
 
-type CargoImageProps = {
-  id: string
-  name: string
-  hazardClass: HazardClass
-  city?: string
-  src?: string
-  /** Мини-бирка: только полоса с ромбом и кодом, без области изображения. */
-  compact?: boolean
-}
-
 const BAR_GROUPS = 7
 const HASH_SEED = 5381
 const HASH_SHIFT = 5
@@ -26,6 +16,17 @@ const BAR_MIN = 1
 const GAP_MIN = 2
 const WIDTH_MASK = 3
 const BITS_PER_GROUP = 4
+
+type CargoImageProps = {
+  id: string
+  name: string
+  hazardClass: HazardClass
+  src?: string
+  /** Ремарка поверх изображения в левом верхнем углу. Одна на карточку. */
+  badge?: string
+  /** Мини-бирка: только полоса с ромбом и кодом, без изображения. */
+  compact?: boolean
+}
 
 /** Детерминированный хеш идентификатора: у каждой бирки свой рисунок штрихов. */
 function hashId(id: string): number {
@@ -56,10 +57,10 @@ function barcode(id: string): string {
 }
 
 /**
- * Почтовая бирка груза. Пропс src готов принять изображение;
+ * Груз с почтовой биркой. Пропс src готов принять изображение;
  * без него страница обязана выглядеть законченной.
  */
-export function CargoImage({ id, name, hazardClass, city, src, compact }: CargoImageProps) {
+export function CargoImage({ id, name, hazardClass, src, badge, compact }: CargoImageProps) {
   if (compact) {
     return (
       <figure className="flex shrink-0 items-center gap-3 border border-rule px-3 py-2">
@@ -72,31 +73,30 @@ export function CargoImage({ id, name, hazardClass, city, src, compact }: CargoI
   }
 
   return (
-    <figure className="border border-rule">
-      <div className="relative aspect-[2/1] w-full overflow-hidden bg-paper-shade">
-        {src && (
-          <Image
-            src={src}
-            alt={name}
-            width={IMAGE_WIDTH}
-            height={IMAGE_HEIGHT}
-            sizes={IMAGE_SIZES}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        )}
-      </div>
+    <figure className="relative aspect-[2/1] w-full overflow-hidden bg-paper-shade">
+      {src && (
+        <Image
+          src={src}
+          alt={name}
+          width={IMAGE_WIDTH}
+          height={IMAGE_HEIGHT}
+          sizes={IMAGE_SIZES}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
 
-      <div className="flex items-center gap-3 border-t border-rule px-4 py-2">
+      {badge && (
+        <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] border border-rule bg-paper/85 px-2 py-1 text-xs leading-tight text-ink">
+          {badge}
+        </span>
+      )}
+
+      <figcaption className="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-rule bg-paper/85 px-4 py-2">
         <HazardBadge hazardClass={hazardClass} />
         <span className="min-w-0 flex-1 truncate text-center font-mono text-[0.6875rem] tracking-wider text-ink">
           PL-CARGO-{id.toUpperCase()}
         </span>
         <span aria-hidden className="h-5 w-12 shrink-0" style={{ backgroundImage: barcode(id) }} />
-      </div>
-
-      {/* Строка города рисуется всегда: без неё бирки разной высоты и карточки съезжают. */}
-      <figcaption className="min-h-[1.5rem] border-t border-rule px-4 py-1.5 text-[0.625rem] uppercase leading-none tracking-[0.2em] text-muted">
-        {city}
       </figcaption>
     </figure>
   )

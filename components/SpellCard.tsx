@@ -19,63 +19,54 @@ export function SpellCard({ spell }: { spell: Spell }) {
   const isClosed = opensIn > 0
   const opensAt = formatMinutesOfDay(workshop.opensAt)
 
+  // Ремарка на изображении одна: состояние мастерской важнее остатка и примечания.
+  const badge = isClosed
+    ? `закрыто ${DOT} открывается в ${opensAt}`
+    : spell.stock !== undefined
+      ? `осталось ${spell.stock} шт`
+      : spell.note
+
   function handleOrder() {
     selectSpell(spell.id)
     scrollToOrder()
   }
 
   return (
-    <article className="flex flex-col border border-rule p-5">
+    <article className="flex flex-col border border-rule">
       <CargoImage
         id={spell.id}
         name={spell.name}
         hazardClass={spell.hazardClass}
-        city={workshop.city}
         src={spell.image}
+        badge={badge}
       />
 
-      <h3 className="mt-5 text-lg font-medium text-ink">{spell.name}</h3>
-      <p className="mt-1 text-xs text-muted">
-        {workshop.name}
-        {workshop.city ? `, ${workshop.city}` : ''}
-      </p>
-
-      {/* Ситуация в карточке не показывается — она выводится в конфигураторе. */}
-      <p className="mt-4 text-sm leading-relaxed text-ink">{spell.effect}</p>
-
-      <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-rule pt-4 text-xs text-muted">
-        <span>готовится {formatDuration(catalogMinutes(spell))}</span>
-        <span className="text-rule">{DOT}</span>
-        <span className="font-mono text-ink">{formatPrice(spell.price)}</span>
-      </div>
-
-      {spell.stock !== undefined && (
-        <p className="mt-3">
-          <span className="border border-class-2 px-2 py-1 text-xs text-class-2">
-            осталось {spell.stock} шт
-          </span>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-lg font-medium text-ink">{spell.name}</h3>
+        <p className="mt-1 text-xs text-muted">
+          {workshop.name}
+          {workshop.city ? `, ${workshop.city}` : ''}
         </p>
-      )}
 
-      {isClosed && (
-        <p className="mt-3">
-          <span className="border border-rule px-2 py-1 text-xs text-muted">
-            закрыто {DOT} открывается в {opensAt}
-          </span>
-        </p>
-      )}
+        <p className="mt-4 text-sm leading-relaxed text-ink">{spell.effect}</p>
 
-      {spell.note && <p className="mt-3 text-xs leading-relaxed text-muted">{spell.note}</p>}
+        <div className="mt-auto">
+          <div className="mt-5 flex items-baseline justify-between gap-3 border-t border-rule pt-4">
+            <span className="font-mono text-lg text-ink">{formatPrice(spell.price)}</span>
+            <span className="text-xs text-muted">
+              готовится {formatDuration(catalogMinutes(spell))}
+            </span>
+          </div>
 
-      <div className="mt-auto pt-5">
-        <button
-          type="button"
-          onClick={handleOrder}
-          disabled={isClosed}
-          className="w-full border border-ink bg-ink px-4 py-2.5 text-sm text-paper hover:bg-transparent hover:text-ink disabled:cursor-not-allowed disabled:border-rule disabled:bg-transparent disabled:text-muted"
-        >
-          {isClosed ? `Откроется в ${opensAt}` : 'Оформить'}
-        </button>
+          <button
+            type="button"
+            onClick={handleOrder}
+            disabled={isClosed}
+            className="mt-4 w-full border border-ink bg-ink px-4 py-2.5 text-sm text-paper hover:bg-transparent hover:text-ink disabled:cursor-not-allowed disabled:border-rule disabled:bg-transparent disabled:text-muted"
+          >
+            {isClosed ? `Откроется в ${opensAt}` : 'Оформить'}
+          </button>
+        </div>
       </div>
     </article>
   )
