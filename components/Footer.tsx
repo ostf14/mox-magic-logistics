@@ -1,10 +1,32 @@
-const COLUMNS = [
-  ['Тарифы', 'Каталог', 'Отследить', 'Отделения'],
-  ['Правила применения', 'Страхование', 'Претензии'],
-  ['Мастерским: стать партнёром', 'Курьерам: вакансии'],
+'use client'
+
+import { scrollToOrder, useOrder } from './order/OrderSection'
+
+/**
+ * href — пункт с якорем на странице, tracking — действие «Отследить».
+ * Остальные пункты нерабочие и на наведение не реагируют.
+ */
+type FooterItem = { label: string; href?: string; tracking?: boolean }
+
+const COLUMNS: FooterItem[][] = [
+  [
+    { label: 'Тарифы', href: '#tariffs' },
+    { label: 'Каталог', href: '#catalog' },
+    { label: 'Отследить', tracking: true },
+    { label: 'Отделения' },
+  ],
+  [{ label: 'Правила применения', href: '#rules' }, { label: 'Страхование' }, { label: 'Претензии' }],
+  [{ label: 'Мастерским: стать партнёром' }, { label: 'Курьерам: вакансии' }],
 ]
 
 export function Footer() {
+  const { showDemoTracking } = useOrder()
+
+  function handleTrack() {
+    showDemoTracking()
+    scrollToOrder()
+  }
+
   return (
     <footer className="border-t border-rule">
       <div className="mx-auto w-full max-w-[76rem] px-5 py-12 md:px-8">
@@ -17,10 +39,20 @@ export function Footer() {
           </div>
 
           {COLUMNS.map((column) => (
-            <ul key={column[0]} className="space-y-2 text-sm text-muted">
+            <ul key={column[0].label} className="space-y-2 text-sm text-muted">
               {column.map((item) => (
-                <li key={item}>
-                  <span className="hover:text-ink">{item}</span>
+                <li key={item.label}>
+                  {item.href && (
+                    <a href={item.href} className="hover:text-ink">
+                      {item.label}
+                    </a>
+                  )}
+                  {item.tracking && (
+                    <button type="button" onClick={handleTrack} className="hover:text-ink">
+                      {item.label}
+                    </button>
+                  )}
+                  {!item.href && !item.tracking && <span>{item.label}</span>}
                 </li>
               ))}
             </ul>

@@ -16,6 +16,10 @@ export const ORDER_SECTION_ID = 'order'
 const DEFAULT_SPELL_ID = spells[0].id
 const TRACKING_NUMBER = 'PL-4471-0293'
 
+/** Показательное отправление для пункта «Отследить»: Кошка, конная доставка. */
+const DEMO_SPELL_ID = 'cat'
+const DEMO_TARIFF_ID = RECOMMENDED_TARIFF_ID
+
 export type OrderView = 'config' | 'form' | 'tracking'
 
 export type Recipient = {
@@ -55,6 +59,8 @@ type OrderApi = {
   reset: () => void
   /** Поиск по трек-номеру из первого экрана: открывает секцию в состоянии трекинга. */
   track: (trackingNumber: string) => void
+  /** Пункт «Отследить» в шапке и подвале: показательное отправление. */
+  showDemoTracking: () => void
 }
 
 const OrderContext = createContext<OrderApi | null>(null)
@@ -111,6 +117,14 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         view: 'tracking',
         trackingNumber: trackingNumber.trim().toUpperCase() || TRACKING_NUMBER,
       })),
+    showDemoTracking: () =>
+      setOrder({
+        ...initialOrder,
+        spellId: DEMO_SPELL_ID,
+        tariffId: DEMO_TARIFF_ID,
+        view: 'tracking',
+        trackingNumber: TRACKING_NUMBER,
+      }),
   }
 
   return <OrderContext.Provider value={api}>{children}</OrderContext.Provider>
