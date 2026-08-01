@@ -49,7 +49,7 @@ export function Tracking() {
         <button
           type="button"
           onClick={reset}
-          className="border border-ink bg-ink px-6 py-3 text-sm text-paper hover:bg-transparent hover:text-ink"
+          className="border border-ink bg-ink px-6 py-3 text-sm text-paper hover:border-accent hover:bg-accent"
         >
           Оформить ещё одно отправление
         </button>

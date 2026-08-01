@@ -98,7 +98,7 @@ export function Form() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
               type="submit"
-              className="border border-ink bg-ink px-6 py-3 text-sm text-paper hover:bg-transparent hover:text-ink"
+              className="border border-ink bg-ink px-6 py-3 text-sm text-paper hover:border-accent hover:bg-accent"
             >
               {SUBMIT_LABEL}
             </button>

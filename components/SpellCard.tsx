@@ -8,9 +8,8 @@ import { formatPrice } from '@/lib/formatPrice'
 import { NOW, formatMinutesOfDay } from '@/lib/now'
 
 import { CargoImage } from './CargoImage'
+import { HazardBadge } from './HazardBadge'
 import { scrollToOrder, useOrder } from './order/OrderSection'
-
-const DOT = '·'
 
 export function SpellCard({ spell }: { spell: Spell }) {
   const { selectSpell } = useOrder()
@@ -19,12 +18,8 @@ export function SpellCard({ spell }: { spell: Spell }) {
   const isClosed = opensIn > 0
   const opensAt = formatMinutesOfDay(workshop.opensAt)
 
-  // Ремарка на изображении одна: состояние мастерской важнее остатка и примечания.
-  const badge = isClosed
-    ? `закрыто ${DOT} открывается в ${opensAt}`
-    : spell.stock !== undefined
-      ? `осталось ${spell.stock} шт`
-      : spell.note
+  // Ремарка на изображении — про сам груз: остаток и условия перевозки.
+  const badge = spell.stock !== undefined ? `осталось ${spell.stock} шт` : spell.note
 
   function handleOrder() {
     selectSpell(spell.id)
@@ -33,19 +28,20 @@ export function SpellCard({ spell }: { spell: Spell }) {
 
   return (
     <article className="flex flex-col border border-rule bg-card">
-      <CargoImage
-        id={spell.id}
-        name={spell.name}
-        hazardClass={spell.hazardClass}
-        src={spell.image}
-        badge={badge}
-      />
+      <CargoImage name={spell.name} src={spell.image} badge={badge} />
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-lg font-medium text-ink">{spell.name}</h3>
-        <p className="mt-1 text-xs text-muted">
-          {workshop.name}
-          {workshop.city ? `, ${workshop.city}` : ''}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg font-medium leading-tight text-ink">{spell.name}</h3>
+          <HazardBadge hazardClass={spell.hazardClass} />
+        </div>
+
+        <p className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted">
+          <span>
+            {workshop.name}
+            {workshop.city ? `, ${workshop.city}` : ''}
+          </span>
+          {isClosed && <span className="border border-rule px-1.5 py-0.5">закрыто</span>}
         </p>
 
         <p className="mt-4 text-sm leading-relaxed text-ink">{spell.effect}</p>
@@ -62,7 +58,7 @@ export function SpellCard({ spell }: { spell: Spell }) {
             type="button"
             onClick={handleOrder}
             disabled={isClosed}
-            className="mt-4 w-full border border-ink bg-ink px-4 py-2.5 text-sm text-paper hover:bg-transparent hover:text-ink disabled:cursor-not-allowed disabled:border-rule disabled:bg-transparent disabled:text-muted"
+            className="mt-4 w-full border border-ink bg-ink px-4 py-2.5 text-sm text-paper hover:border-accent hover:bg-accent disabled:cursor-not-allowed disabled:border-dashed disabled:border-rule disabled:bg-transparent disabled:text-muted"
           >
             {isClosed ? `Откроется в ${opensAt}` : 'Оформить'}
           </button>

@@ -38,7 +38,7 @@ export function Hero() {
               <button
                 type="button"
                 onClick={scrollToOrder}
-                className="border border-ink bg-ink px-6 py-3 text-sm text-paper hover:bg-transparent hover:text-ink"
+                className="border border-ink bg-ink px-6 py-3 text-sm text-paper hover:border-accent hover:bg-accent"
               >
                 Оформить доставку
               </button>
@@ -55,7 +55,7 @@ export function Hero() {
                 />
                 <button
                   type="submit"
-                  className="shrink-0 border-l border-rule px-5 py-3 text-sm text-ink hover:bg-ink hover:text-paper"
+                  className="shrink-0 border-l border-rule px-5 py-3 text-sm text-ink hover:bg-accent hover:text-paper"
                 >
                   Отследить
                 </button>

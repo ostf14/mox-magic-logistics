@@ -78,9 +78,11 @@ export function TariffTile({
       onClick={() => onSelect(tariff.id)}
       disabled={disabled}
       aria-pressed={selected}
-      className={`grid h-full ${ROWS} content-start gap-y-1 border bg-card p-4 text-left ${
+      className={`grid h-full ${ROWS} content-start gap-y-1 border p-4 text-left ${
         selected ? 'border-ink' : 'border-rule'
-      } ${disabled ? 'cursor-not-allowed' : 'hover:border-ink'}`}
+      } ${
+        disabled ? 'cursor-not-allowed border-dashed bg-transparent' : 'bg-card hover:border-ink'
+      }`}
     >
       <span className={`text-lg font-medium leading-tight ${tone}`}>{tariff.name}</span>
 

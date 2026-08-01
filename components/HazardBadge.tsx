@@ -46,7 +46,7 @@ export function HazardBadge({ hazardClass }: { hazardClass: HazardClass }) {
         </span>
       </button>
       <span
-        className={`pointer-events-none absolute bottom-[calc(100%+0.5rem)] left-0 z-10 w-60 border bg-paper p-3 text-xs leading-relaxed text-ink opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 ${TOOLTIP_TONE[hazardClass]}`}
+        className={`pointer-events-none absolute bottom-[calc(100%+0.5rem)] right-0 z-10 w-60 border bg-paper p-3 text-xs leading-relaxed text-ink opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 ${TOOLTIP_TONE[hazardClass]}`}
         role="tooltip"
       >
         {hazardDescription(hazardClass)}

@@ -45,13 +45,7 @@ export function Config() {
           <span className="text-xs uppercase tracking-[0.14em] text-muted">Что доставляем</span>
           <div className="mt-2 flex items-start justify-between gap-4 border border-rule bg-card p-4">
             <div className="flex min-w-0 items-start gap-4">
-              <CargoImage
-                thumb
-                id={spell.id}
-                name={spell.name}
-                hazardClass={spell.hazardClass}
-                src={spell.image}
-              />
+              <CargoImage thumb name={spell.name} src={spell.image} />
               <span className="min-w-0">
                 <span className="block text-lg font-medium text-ink">{spell.name}</span>
                 <span className="mt-1 block text-xs text-muted">

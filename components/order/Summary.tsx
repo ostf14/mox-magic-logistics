@@ -68,7 +68,7 @@ export function Summary({ calc, spellId, tariffId, actionLabel, onAction }: Summ
         <button
           type="button"
           onClick={onAction}
-          className="mt-5 hidden w-full border border-ink bg-ink px-4 py-2.5 text-sm text-paper hover:bg-transparent hover:text-ink md:block"
+          className="mt-5 hidden w-full border border-ink bg-ink px-4 py-2.5 text-sm text-paper hover:border-accent hover:bg-accent md:block"
         >
           {actionLabel}
         </button>
@@ -93,7 +93,7 @@ export function SummaryBar({
       <button
         type="button"
         onClick={onAction}
-        className="border border-ink bg-ink px-5 py-2.5 text-sm text-paper"
+        className="border border-ink bg-ink px-5 py-2.5 text-sm text-paper hover:border-accent hover:bg-accent"
       >
         {actionLabel}
       </button>
