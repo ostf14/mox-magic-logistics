@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* SPEC §9. Значения предварительные, структура обязательна. */
+:root {
+  --paper: #f2efe9;
+  --ink: #1a1a18;
+  --muted: #6b6862;
+  --rule: #d6d1c7;
+  --accent: #7b2d26;
+
+  --class-1: #8a867e;
+  --class-2: #a87b2e;
+  --class-3: #c2571f;
+  --class-4: #7b2d26;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+
+  --color-class-1: var(--class-1);
+  --color-class-2: var(--class-2);
+  --color-class-3: var(--class-3);
+  --color-class-4: var(--class-4);
+
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-numeric);
+
+  /* Скругления больше 4px запрещены. */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui), system-ui, sans-serif;
+}
