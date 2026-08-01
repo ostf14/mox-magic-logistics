@@ -101,7 +101,7 @@ export function CargoImage({ id, name, hazardClass, src, badge, thumb }: CargoIm
 
       <figcaption className="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-rule bg-paper/85 px-4 py-2">
         <HazardBadge hazardClass={hazardClass} />
-        <span className="min-w-0 flex-1 truncate text-center font-mono text-[0.6875rem] tracking-wider text-ink">
+        <span className="min-w-0 flex-1 truncate text-center font-mono text-xs tracking-wider text-muted">
           PL-CARGO-{id.toUpperCase()}
         </span>
         <span aria-hidden className="h-5 w-12 shrink-0" style={{ backgroundImage: barcode(id) }} />

@@ -27,6 +27,8 @@ export function Form() {
     placeholder: string
     hint?: string
     multiline?: boolean
+    /** Поле с датой и временем набирается моноширинным. */
+    mono?: boolean
   }[] = [
     { id: 'name', label: 'Кому', placeholder: 'имя и прозвище' },
     {
@@ -40,6 +42,7 @@ export function Form() {
       label: 'Когда',
       placeholder: formatAbsolute(calc.readyAt),
       hint: 'можно перенести на любой день в течение недели',
+      mono: true,
     },
     {
       id: 'note',
@@ -82,7 +85,9 @@ export function Form() {
                     value={order.recipient[field.id]}
                     onChange={(event) => setRecipientField(field.id, event.target.value)}
                     placeholder={field.placeholder}
-                    className="mt-2 w-full border border-rule bg-paper px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-ink focus:outline-none"
+                    className={`mt-2 w-full border border-rule bg-paper px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-ink focus:outline-none ${
+                      field.mono ? 'font-mono' : ''
+                    }`}
                   />
                 )}
                 {field.hint && <span className="mt-2 block text-xs text-muted">{field.hint}</span>}

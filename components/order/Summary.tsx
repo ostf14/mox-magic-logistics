@@ -61,7 +61,7 @@ export function Summary({ calc, spellId, tariffId, actionLabel, onAction }: Summ
 
       <div className="mt-3 flex items-baseline justify-between gap-4 border-t border-rule pt-3">
         <span className="text-sm text-ink">Итого</span>
-        <span className="font-mono text-base text-ink">{formatPrice(calc.total)}</span>
+        <span className="font-mono text-lg text-ink">{formatPrice(calc.total)}</span>
       </div>
 
       {actionLabel && onAction && (

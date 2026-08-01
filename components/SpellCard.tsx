@@ -54,7 +54,7 @@ export function SpellCard({ spell }: { spell: Spell }) {
           <div className="mt-5 flex items-baseline justify-between gap-3 border-t border-rule pt-4">
             <span className="font-mono text-lg text-ink">{formatPrice(spell.price)}</span>
             <span className="text-xs text-muted">
-              готовится {formatDuration(catalogMinutes(spell))}
+              готовится <span className="font-mono">{formatDuration(catalogMinutes(spell))}</span>
             </span>
           </div>
 

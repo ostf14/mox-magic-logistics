@@ -32,7 +32,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-[76rem] px-5 py-12 md:px-8">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <span className="block text-base font-semibold tracking-[0.18em] text-ink">ПЛОТВА</span>
+            <span className="block text-lg font-semibold tracking-[0.18em] text-ink">ПЛОТВА</span>
             <p className="mt-2 max-w-[16rem] text-sm leading-relaxed text-muted">
               Служба доставки заклинаний. Работаем с 1178 года.
             </p>

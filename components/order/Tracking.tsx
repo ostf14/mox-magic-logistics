@@ -30,7 +30,9 @@ export function Tracking() {
         </div>
 
         <p className="mt-5 text-3xl font-semibold tracking-tight text-ink md:text-4xl">В ПУТИ</p>
-        <p className="mt-2 text-sm text-muted">Прибудет {formatAbsolute(calc.readyAt)}</p>
+        <p className="mt-2 text-sm text-muted">
+          Прибудет <span className="font-mono">{formatAbsolute(calc.readyAt)}</span>
+        </p>
 
         <div
           role="progressbar"

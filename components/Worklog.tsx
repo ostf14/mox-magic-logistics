@@ -119,7 +119,7 @@ export function Worklog() {
           type="button"
           onClick={() => setOpen((current) => !current)}
           aria-expanded={open}
-          className="absolute right-full top-1/2 -translate-y-1/2 bg-terminal-text px-2 py-5 font-mono text-[0.6875rem] uppercase tracking-[0.3em] text-ink [writing-mode:vertical-rl] rotate-180"
+          className="absolute right-full top-1/2 -translate-y-1/2 bg-terminal-text px-2 py-5 font-mono text-xs uppercase tracking-[0.3em] text-ink [writing-mode:vertical-rl] rotate-180"
         >
           {PANEL_LABEL}
         </button>
