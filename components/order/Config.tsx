@@ -43,37 +43,34 @@ export function Config() {
       <div className="mt-9 grid gap-10 md:grid-cols-[minmax(0,1fr)_21rem]">
         <div>
           <span className="text-xs uppercase tracking-[0.14em] text-muted">Что доставляем</span>
-          <div className="mt-2 border border-rule p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex min-w-0 items-start gap-4">
-                <CargoImage
-                  compact
-                  id={spell.id}
-                  name={spell.name}
-                  hazardClass={spell.hazardClass}
-                />
-                <span className="min-w-0">
-                  <span className="block text-base font-medium text-ink">{spell.name}</span>
-                  <span className="mt-1 block text-xs text-muted">
-                    {workshop.name}
-                    {workshop.city ? `, ${workshop.city}` : ''}
-                  </span>
+          <div className="mt-2 flex items-start justify-between gap-4 border border-rule bg-card p-4">
+            <div className="flex min-w-0 items-start gap-4">
+              <CargoImage
+                thumb
+                id={spell.id}
+                name={spell.name}
+                hazardClass={spell.hazardClass}
+                src={spell.image}
+              />
+              <span className="min-w-0">
+                <span className="block text-base font-medium text-ink">{spell.name}</span>
+                <span className="mt-1 block text-xs text-muted">
+                  {workshop.name}
+                  {workshop.city ? `, ${workshop.city}` : ''}
                 </span>
-              </div>
-
-              <div className="flex shrink-0 flex-col items-end gap-2">
-                <button
-                  type="button"
-                  onClick={scrollToCatalog}
-                  className="text-xs text-muted underline underline-offset-4 hover:text-ink"
-                >
-                  Выбрать другое
-                </button>
-                <span className="font-mono text-sm text-ink">{formatPrice(spell.price)}</span>
-              </div>
+              </span>
             </div>
 
-            <p className="mt-3 text-xs leading-relaxed text-muted">{spell.situation}</p>
+            <div className="flex shrink-0 flex-col items-end gap-2">
+              <button
+                type="button"
+                onClick={scrollToCatalog}
+                className="text-xs text-muted underline underline-offset-4 hover:text-ink"
+              >
+                Выбрать другое
+              </button>
+              <span className="font-mono text-lg text-ink">{formatPrice(spell.price)}</span>
+            </div>
           </div>
 
           <div className="mt-8">

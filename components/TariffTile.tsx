@@ -18,32 +18,46 @@ type TariffTileProps = {
  */
 const ROWS = 'grid-rows-[1.75rem_1.5rem_2.5rem_auto]'
 
-/** Статичная плитка для блока тарифов: витрина, а не выбор. */
-export function TariffCard({ tariff, recommended = false }: { tariff: Tariff; recommended?: boolean }) {
+function Recommended() {
   return (
-    <div className={`grid h-full ${ROWS} content-start gap-y-1 bg-paper p-4`}>
+    <span className="shrink-0 border border-accent px-1.5 py-0.5 text-[0.625rem] uppercase leading-none tracking-[0.12em] text-accent">
+      рекомендуем
+    </span>
+  )
+}
+
+function Note() {
+  return (
+    <span className="mt-2 block text-[0.6875rem] leading-relaxed text-muted">
+      наш первый тариф, работает с 1178 года
+    </span>
+  )
+}
+
+/** Статичная плитка для блока тарифов: витрина, а не выбор. */
+export function TariffCard({
+  tariff,
+  recommended = false,
+}: {
+  tariff: Tariff
+  recommended?: boolean
+}) {
+  return (
+    <div className={`grid h-full ${ROWS} content-start gap-y-1 bg-card p-4`}>
       <span className="flex items-start justify-between gap-3">
         <span className="text-base font-medium leading-tight text-ink">{tariff.name}</span>
-        {recommended && (
-          <span className="shrink-0 border border-accent px-1.5 py-0.5 text-[0.625rem] uppercase leading-none tracking-[0.12em] text-accent">
-            рекомендуем
-          </span>
-        )}
+        {recommended && <Recommended />}
       </span>
 
-      <span className="font-mono text-sm leading-6 text-ink">
+      <span className="font-mono text-xs leading-6 text-muted">
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
       <span className="text-xs leading-tight text-muted">{tariff.method}</span>
 
       <span className="border-t border-rule pt-3">
-        <span className="block font-mono text-sm text-ink">{formatPrice(tariff.price)}</span>
-        {recommended && (
-          <span className="mt-2 block text-[0.6875rem] leading-relaxed text-muted">
-            наш первый тариф, работает с 1178 года
-          </span>
-        )}
+        <span className="block font-mono text-base text-ink">{formatPrice(tariff.price)}</span>
+        {recommended && <Note />}
       </span>
     </div>
   )
@@ -64,32 +78,24 @@ export function TariffTile({
       onClick={() => onSelect(tariff.id)}
       disabled={disabled}
       aria-pressed={selected}
-      className={`grid h-full ${ROWS} content-start gap-y-1 border p-4 text-left ${
+      className={`grid h-full ${ROWS} content-start gap-y-1 border bg-card p-4 text-left ${
         selected ? 'border-ink' : 'border-rule'
       } ${disabled ? 'cursor-not-allowed' : 'hover:border-ink'}`}
     >
       <span className="flex items-start justify-between gap-3">
         <span className={`text-base font-medium leading-tight ${tone}`}>{tariff.name}</span>
-        {recommended && (
-          <span className="shrink-0 border border-accent px-1.5 py-0.5 text-[0.625rem] uppercase leading-none tracking-[0.12em] text-accent">
-            рекомендуем
-          </span>
-        )}
+        {recommended && <Recommended />}
       </span>
 
-      <span className={`font-mono text-sm leading-6 ${tone}`}>
+      <span className="font-mono text-xs leading-6 text-muted">
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
       <span className="text-xs leading-tight text-muted">{tariff.method}</span>
 
       <span className="border-t border-rule pt-3">
-        <span className={`block font-mono text-sm ${tone}`}>{formatPrice(tariff.price)}</span>
-        {recommended && (
-          <span className="mt-2 block text-[0.6875rem] leading-relaxed text-muted">
-            наш первый тариф, работает с 1178 года
-          </span>
-        )}
+        <span className={`block font-mono text-base ${tone}`}>{formatPrice(tariff.price)}</span>
+        {recommended && <Note />}
       </span>
     </button>
   )

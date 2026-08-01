@@ -24,9 +24,12 @@ type CargoImageProps = {
   src?: string
   /** Ремарка поверх изображения в левом верхнем углу. Одна на карточку. */
   badge?: string
-  /** Мини-бирка: только полоса с ромбом и кодом, без изображения. */
-  compact?: boolean
+  /** Квадратная миниатюра для строки заказа. */
+  thumb?: boolean
 }
+
+/** Ширина под квадрат 4rem: исходник 2:1, по высоте его кроет вдвое большая ширина. */
+const THUMB_WIDTH = 128
 
 /** Детерминированный хеш идентификатора: у каждой бирки свой рисунок штрихов. */
 function hashId(id: string): number {
@@ -60,14 +63,19 @@ function barcode(id: string): string {
  * Груз с почтовой биркой. Пропс src готов принять изображение;
  * без него страница обязана выглядеть законченной.
  */
-export function CargoImage({ id, name, hazardClass, src, badge, compact }: CargoImageProps) {
-  if (compact) {
+export function CargoImage({ id, name, hazardClass, src, badge, thumb }: CargoImageProps) {
+  if (thumb) {
     return (
-      <figure className="flex shrink-0 items-center gap-3 border border-rule px-3 py-2">
-        <HazardBadge hazardClass={hazardClass} />
-        <figcaption className="font-mono text-[0.6875rem] tracking-wider text-ink">
-          PL-CARGO-{id.toUpperCase()}
-        </figcaption>
+      <figure className="relative h-16 w-16 shrink-0 overflow-hidden border border-rule bg-paper-shade">
+        {src && (
+          <Image
+            src={src}
+            alt={name}
+            width={THUMB_WIDTH}
+            height={THUMB_WIDTH}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
       </figure>
     )
   }

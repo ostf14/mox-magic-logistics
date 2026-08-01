@@ -3,6 +3,8 @@
 /* SPEC §9. Значения предварительные, структура обязательна. */
 :root {
   --paper: #f2efe9;
+  /* Фон коробок: карточки, плитки, блок оформления. */
+  --card: #f7f5f1;
   /* Пара процентов темнее бумаги: подложка под изображение груза. */
   --paper-shade: #eae6de;
   --ink: #1a1a18;
@@ -26,6 +28,7 @@
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-card: var(--card);
   --color-paper-shade: var(--paper-shade);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
@@ -53,4 +56,24 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+/* Бегущая строка операционной сводки. Лента продублирована, сдвиг на половину. */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker 64s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
 }

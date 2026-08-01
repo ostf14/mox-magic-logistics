@@ -34,7 +34,7 @@ export function Summary({ calc, spellId, tariffId, actionLabel, onAction }: Summ
   const workshop = workshopById(spell.workshopId)
 
   return (
-    <div className="border border-rule p-5 md:sticky md:top-6 md:self-start">
+    <div className="border border-rule bg-card p-5 md:sticky md:top-6 md:self-start">
       <div className="flex items-baseline justify-between gap-4">
         <span className="text-sm text-muted">Готово у вас</span>
         <span className="font-mono text-sm text-ink">

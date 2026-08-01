@@ -32,7 +32,7 @@ export function SpellCard({ spell }: { spell: Spell }) {
   }
 
   return (
-    <article className="flex flex-col border border-rule">
+    <article className="flex flex-col border border-rule bg-card">
       <CargoImage
         id={spell.id}
         name={spell.name}
