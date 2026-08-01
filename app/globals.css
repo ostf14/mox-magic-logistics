@@ -39,3 +39,23 @@ body {
   color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
 }
+
+/* Бегущая строка операционной сводки. Лента продублирована, сдвиг на половину. */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker 64s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}

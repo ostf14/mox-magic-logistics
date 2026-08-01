@@ -1,7 +1,8 @@
 import { SERVICE_FEE, SERVICE_FEE_LABEL, INSURANCE_OPTION_ID, options } from '../data/options'
 import { spellById } from '../data/spells'
-import { FOOT_TARIFF_ID, tariffById } from '../data/tariffs'
+import { FOOT_TARIFF_ID, RECOMMENDED_TARIFF_ID, tariffById } from '../data/tariffs'
 import { workshopById, type Workshop } from '../data/workshops'
+import type { Spell } from '../data/spells'
 import { MINUTES_IN_DAY, addMinutes, minutesOfDay } from './now'
 
 /** Класс, при котором пешая доставка недоступна: только с сопровождением чародея. */
@@ -39,6 +40,15 @@ export function minutesUntilOpen(workshop: Workshop, now: Date): number {
   if (current >= workshop.opensAt && current < workshop.closesAt) return NO_WAIT
   if (current < workshop.opensAt) return workshop.opensAt - current
   return MINUTES_IN_DAY - current + workshop.opensAt
+}
+
+/**
+ * Срок в карточке каталога: изготовление плюс конная доставка.
+ * Ожидание открытия мастерской не входит намеренно — карточки сравниваются
+ * по одному основанию, иначе цифра зависела бы от времени суток.
+ */
+export function catalogMinutes(spell: Spell): number {
+  return spell.prepMinutes + tariffById(RECOMMENDED_TARIFF_ID).deliveryMinutes
 }
 
 export function calcOrder(input: OrderInput): OrderCalc {
