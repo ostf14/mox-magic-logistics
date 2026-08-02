@@ -10,6 +10,7 @@ import { calcOrder } from '@/lib/calcOrder'
 import { formatPrice } from '@/lib/formatPrice'
 import { NOW } from '@/lib/now'
 
+import { Steps, STEP_COMPOSITION } from './Steps'
 import { Summary, SummaryBar } from './Summary'
 import { useOrder } from './OrderSection'
 
@@ -35,10 +36,11 @@ export function Config() {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
+      <Steps current={STEP_COMPOSITION} />
+
+      <h2 className="mt-6 text-2xl font-semibold tracking-tight text-ink md:text-3xl">
         Оформление отправления
       </h2>
-      <p className="mt-3 text-sm text-muted">Шаг 1 из 3 — состав</p>
 
       <div className="mt-9 grid gap-10 md:grid-cols-[minmax(0,1fr)_21rem]">
         <div>

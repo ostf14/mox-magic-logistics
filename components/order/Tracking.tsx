@@ -5,6 +5,7 @@ import { calcOrder } from '@/lib/calcOrder'
 import { formatAbsolute } from '@/lib/formatAbsolute'
 import { NOW } from '@/lib/now'
 
+import { Steps, STEP_SHIPMENT } from './Steps'
 import { Timeline } from './Timeline'
 import { useOrder } from './OrderSection'
 
@@ -23,7 +24,9 @@ export function Tracking() {
 
   return (
     <div className="max-w-3xl">
-      <div className="border border-rule p-5 md:p-6">
+      <Steps current={STEP_SHIPMENT} />
+
+      <div className="mt-6 border border-rule p-5 md:p-6">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <span className="text-xs uppercase tracking-[0.14em] text-muted">Трек-номер</span>
           <span className="font-mono text-sm text-ink">{order.trackingNumber}</span>

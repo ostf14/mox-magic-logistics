@@ -1,21 +1,33 @@
-'use client'
-
-import { useState } from 'react'
+import { RuleIcon } from './RuleIcon'
 
 const RULES = [
-  'Отправление вскрывается в момент применения. Вскрытое заранее заклинание службой не возмещается.',
-  'Курьер вправе отказать в перевозке, если печать мастерской повреждена, отсутствует или поставлена не при нём.',
-  'Служба не доставляет заклинания на территорию Каэр Морхена, в Аретузу и на закрытые участки Велена. Список закрытых участков обновляется еженедельно.',
-  'Белый мёд отменяет действие заклинания, применённого не ранее часа назад. Более поздние отмены службой не гарантируются.',
-  'Отправления класса IV принимаются к перевозке до 18:00. Позднее этого времени сопровождение недоступно.',
-  'Отправление, не востребованное в отделении в течение семи суток, утилизируется в присутствии двух свидетелей.',
+  {
+    title: 'Не вскрывать до применения',
+    text: 'вскрытое заранее заклинание службой не возмещается',
+  },
+  {
+    title: 'Печать ставится при курьере',
+    text: 'повреждённая или чужая печать даёт право отказать в перевозке',
+  },
+  {
+    title: 'Есть закрытые адреса',
+    text: 'Каэр Морхен, Аретуза и закрытые участки Велена, список обновляется еженедельно',
+  },
+  {
+    title: 'Отмена в течение часа',
+    text: 'Белый мёд отменяет заклинание, применённое не ранее часа назад',
+  },
+  {
+    title: 'Класс IV — до 18:00',
+    text: 'позднее этого времени сопровождение чародея недоступно',
+  },
+  {
+    title: 'Хранение семь суток',
+    text: 'невостребованное отправление утилизируется в присутствии двух свидетелей',
+  },
 ]
 
-const LIST_ID = 'rules-list'
-
 export function Rules() {
-  const [open, setOpen] = useState(false)
-
   return (
     <section id="rules" className="border-t border-rule">
       <div className="mx-auto w-full max-w-[76rem] px-5 py-14 md:px-8 md:py-20">
@@ -26,34 +38,15 @@ export function Rules() {
           Редакция от 14 июля. Действуют для всех отправлений.
         </p>
 
-        <div className="mt-6 flex items-center gap-4">
-          <span className="font-mono text-sm text-ink">{RULES.length} пунктов</span>
-          <button
-            type="button"
-            onClick={() => setOpen((current) => !current)}
-            aria-expanded={open}
-            aria-controls={LIST_ID}
-            className="text-sm text-muted underline underline-offset-4 hover:text-ink"
-          >
-            {open ? 'Скрыть' : 'Показать'}
-          </button>
+        <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {RULES.map((rule) => (
+            <article key={rule.title}>
+              <RuleIcon alt={rule.title} />
+              <h3 className="mt-4 text-sm font-medium leading-tight text-ink">{rule.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{rule.text}</p>
+            </article>
+          ))}
         </div>
-
-        {open && (
-          <ol
-            id={LIST_ID}
-            className="mt-8 grid list-outside list-decimal gap-x-12 pl-6 md:grid-cols-2"
-          >
-            {RULES.map((rule) => (
-              <li
-                key={rule}
-                className="border-t border-rule py-4 pl-2 text-sm leading-relaxed text-ink marker:font-mono marker:text-xs marker:text-muted"
-              >
-                {rule}
-              </li>
-            ))}
-          </ol>
-        )}
       </div>
     </section>
   )

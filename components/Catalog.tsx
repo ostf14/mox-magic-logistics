@@ -9,11 +9,6 @@ export function Catalog() {
         <h2 className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
           Каталог заклинаний
         </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-          Мастерские готовят, мы везём. Сроки в карточках — время изготовления. Доставка считается
-          отдельно.
-        </p>
-
         <div className="mt-8 grid gap-5 sm:grid-cols-2 md:grid-cols-3">
           {spells.map((spell) => (
             <SpellCard key={spell.id} spell={spell} />
