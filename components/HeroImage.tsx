@@ -31,7 +31,7 @@ export function HeroImage({ src, alt = '' }: { src?: string; alt?: string }) {
     <div className="relative hidden h-full min-h-[24rem] md:block">
       {src && (
         <div
-          className={`absolute inset-y-0 right-0 my-auto w-[calc(100%+4rem)] pr-12 ${FRAME_HEIGHT} min-h-[24rem] xl:pr-0`}
+          className={`absolute inset-y-0 right-0 my-auto w-[calc(100%_+_4rem)] pr-12 ${FRAME_HEIGHT} min-h-[24rem] xl:pr-0`}
         >
           <Image
             src={src}

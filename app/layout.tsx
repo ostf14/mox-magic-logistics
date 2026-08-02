@@ -1,13 +1,23 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
+import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
 import './globals.css'
 
-/** Курсив в наборе только под логотип: PLOTVA, 700 italic. */
 const ui = IBM_Plex_Sans({
   variable: '--font-ui',
   subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+  weight: ['400', '500', '600'],
+})
+
+/**
+ * Логотип и только он. Вариативный, с осью ширины: вес и ширина задаются
+ * через font-variation-settings, статическое начертание оси wdth не даёт.
+ * Кириллического сабсета у Archivo в каталоге нет, и он не нужен: в знаке
+ * только латиница.
+ */
+const logo = Archivo({
+  variable: '--font-archivo',
+  subsets: ['latin'],
+  axes: ['wdth'],
 })
 
 const numeric = IBM_Plex_Mono({
@@ -28,7 +38,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${ui.variable} ${numeric.variable} antialiased`}>{children}</body>
+      <body className={`${ui.variable} ${numeric.variable} ${logo.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }

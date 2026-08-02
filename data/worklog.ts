@@ -104,7 +104,8 @@ export const stack: DefRow[] = [
   {
     label: 'Шрифты',
     value: [
-      'IBM Plex Sans — логотип и интерфейс',
+      'Archivo — логотип, вариативный: wght 900, wdth 125',
+      'IBM Plex Sans — интерфейс',
       'IBM Plex Mono — числа, время, коды',
     ],
   },
@@ -225,7 +226,7 @@ export const palette: { group: string; swatches: Swatch[] }[] = [
 export const PALETTE_NOTE = 'Цветов вне токенов в проекте нет.'
 
 export const typeScale: DefRow[] = [
-  { label: '3.75rem', value: ['H1, на мобиле 2.25rem'] },
+  { label: '3.75rem', value: ['H1, на средних экранах 3rem, на мобиле 2.25rem'] },
   { label: '2.25rem', value: ['состояние заказа в трекинге, на мобиле 1.875rem'] },
   { label: '1.875rem', value: ['заголовки секций, на мобиле 1.5rem'] },
   { label: '1.5rem', value: ['логотип'] },

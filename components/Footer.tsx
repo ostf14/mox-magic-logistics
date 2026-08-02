@@ -32,9 +32,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-[76rem] px-5 py-12 md:px-8">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <span className="block text-2xl font-bold italic leading-none tracking-[0.02em] text-ink">
-              PLOTVA
-            </span>
+            <span className="logo-mark text-2xl leading-none text-ink">PLOTVA</span>
             <p className="mt-3 max-w-[16rem] text-sm leading-relaxed text-muted">
               Служба доставки заклинаний и зелий. Работаем с 1178 года.
             </p>

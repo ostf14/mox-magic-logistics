@@ -79,7 +79,8 @@ https://github.com/ostf14/mox-magic-logistics
 ```
 Фреймворк      Next.js 15, App Router, TypeScript
 Стили          Tailwind v4, без UI-библиотек
-Шрифты         IBM Plex Sans — логотип и интерфейс
+Шрифты         Archivo — логотип, вариативный: wght 900, wdth 125
+               IBM Plex Sans — интерфейс
                IBM Plex Mono — числа, время, коды
 Хостинг        Vercel, автосборка с main
 ```
@@ -262,7 +263,7 @@ https://github.com/ostf14/mox-magic-logistics
 ### Типографика
 
 ```
-3.75rem    H1, на мобиле 2.25rem
+3.75rem    H1, на средних экранах 3rem, на мобиле 2.25rem
 2.25rem    состояние заказа в трекинге, на мобиле 1.875rem
 1.875rem   заголовки секций, на мобиле 1.5rem
 1.5rem     логотип

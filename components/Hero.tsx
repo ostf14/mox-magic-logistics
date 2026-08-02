@@ -22,9 +22,15 @@ export function Hero() {
       className="flex flex-col border-b border-rule md:min-h-[calc(100svh-var(--header-height))]"
     >
       <div className="mx-auto flex w-full max-w-[76rem] flex-1 items-center px-5 py-14 md:px-8 md:py-10">
-        <div className="grid w-full gap-12 md:grid-cols-2 md:items-center md:gap-16">
+        {/*
+          Ширина текстовой колонки подобрана под заголовок: «заклинания и
+          зелья» должно вставать одной строкой. На широких экранах колонка
+          фиксирована в 35rem — этого ровно хватает строке в 3.75rem, а всё
+          остальное поле уходит всаднику.
+        */}
+        <div className="grid w-full gap-12 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-16 xl:grid-cols-[35rem_1fr]">
           <div>
-            <h1 className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
+            <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight text-ink lg:text-5xl xl:text-6xl">
               Доставляем заклинания и зелья
             </h1>
 

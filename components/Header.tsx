@@ -22,9 +22,7 @@ export function Header() {
     <header className="border-b border-rule">
       <div className="mx-auto flex w-full max-w-[76rem] flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between md:gap-8 md:px-8">
         <a href="#top" className="shrink-0">
-          <span className="block text-2xl font-bold italic leading-none tracking-[0.02em] text-ink">
-            PLOTVA
-          </span>
+          <span className="logo-mark text-2xl leading-none text-ink">PLOTVA</span>
         </a>
 
         <nav className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-muted">

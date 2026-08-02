@@ -48,6 +48,8 @@
 
   --font-sans: var(--font-ui);
   --font-mono: var(--font-numeric);
+  /* Вариативный гротеск только под логотип: шапка и подвал. */
+  --font-logo: var(--font-archivo);
 
   /* Скругления больше 4px запрещены. */
   --radius-xs: 2px;
@@ -58,6 +60,24 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+/*
+ * Знак. Вес и ширина берутся с осей вариативного шрифта, наклон — скосом:
+ * у Archivo нет курсива, да и скос даёт угол заметнее. Поля по бокам держат
+ * вынос скошенных букв: низ уезжает влево, верх вправо примерно на 0.21
+ * высоты строки, отрицательные margin возвращают знак на линию колонки.
+ */
+.logo-mark {
+  display: inline-block;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings:
+    "wght" 900,
+    "wdth" 125;
+  letter-spacing: 0;
+  transform: skewX(-12deg);
+  padding-inline: 0.375rem;
+  margin-inline: -0.375rem;
 }
 
 /*
