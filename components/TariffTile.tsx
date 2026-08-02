@@ -15,36 +15,28 @@ type TariffTileProps = {
 }
 
 /**
- * Строки плитки заданы жёстко: название, бейдж, срок, способ и цена
+ * Строки плитки заданы жёстко: название, бейдж, срок, иллюстрация и цена
  * выравниваются по одним линиям во всех четырёх плитках. Строка бейджа есть
  * и там, где бейджа нет, — иначе плитки разъезжаются по ширине.
  */
-const ROWS = 'grid-rows-[2rem_1.5rem_1.5rem_2.5rem_auto]'
+const ROWS = 'grid-rows-[2rem_1.5rem_1.5rem_auto_auto]'
 
 const GLYPH_SIDE = 320
 
 /**
- * Высота зоны иллюстрации: от верха плитки до разделительной линии перед
- * ценой. Складывается из строк ROWS с отступами и верхнего padding.
+ * Иллюстрация тарифа в свободной зоне между сроком и разделителем: справа,
+ * ничем не перекрыта, размер от ширины плитки. Светлый фон исходника
+ * растворяется умножением, альфа не вырезается.
  */
-const GLYPH_ZONE = 'h-[9.5rem]'
-
-/**
- * Иллюстрация тарифа фоном в правом верхнем поле, целиком над разделителем.
- * Светлый фон исходника растворяется умножением, альфа не вырезается.
- */
-function Glyph({ tariff, width }: { tariff: Tariff; width: string }) {
+function Glyph({ tariff }: { tariff: Tariff }) {
   return (
-    <span
-      aria-hidden
-      className={`pointer-events-none absolute right-0 top-0 ${width} ${GLYPH_ZONE} block`}
-    >
+    <span aria-hidden className="my-2 block aspect-square w-[70%] max-w-[11rem] justify-self-end">
       <Image
         src={tariff.image}
         alt=""
         width={GLYPH_SIDE}
         height={GLYPH_SIDE}
-        className="h-full w-full object-contain object-right-bottom opacity-15 mix-blend-multiply"
+        className="h-full w-full object-contain opacity-15 mix-blend-multiply"
       />
     </span>
   )
@@ -75,22 +67,18 @@ export function TariffCard({
   recommended?: boolean
 }) {
   return (
-    <div
-      className={`relative grid h-full overflow-hidden ${ROWS} content-start gap-y-1 bg-card p-4`}
-    >
-      <Glyph tariff={tariff} width="w-3/5" />
+    <div className={`grid h-full ${ROWS} content-start gap-y-1 bg-card p-4`}>
+      <span className="text-lg font-medium leading-tight text-ink">{tariff.name}</span>
 
-      <span className="relative text-lg font-medium leading-tight text-ink">{tariff.name}</span>
+      <span className="flex items-start">{recommended && <Recommended />}</span>
 
-      <span className="relative flex items-start">{recommended && <Recommended />}</span>
-
-      <span className="relative font-mono text-xs leading-6 text-muted">
+      <span className="font-mono text-xs leading-6 text-muted">
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
-      <span className="relative text-xs leading-tight text-muted">{tariff.method}</span>
+      <Glyph tariff={tariff} />
 
-      <span className="relative border-t border-rule pt-3">
+      <span className="border-t border-rule pt-3">
         <span className="block font-mono text-lg text-ink">{formatPrice(tariff.price)}</span>
         {recommended && <Note />}
       </span>
@@ -113,25 +101,23 @@ export function TariffTile({
       onClick={() => onSelect(tariff.id)}
       disabled={disabled}
       aria-pressed={selected}
-      className={`relative grid h-full overflow-hidden ${ROWS} content-start gap-y-1 border p-4 text-left ${
+      className={`grid h-full ${ROWS} content-start gap-y-1 border p-4 text-left ${
         selected ? 'border-ink' : 'border-rule'
       } ${
         disabled ? 'cursor-not-allowed border-dashed bg-transparent' : 'bg-card hover:border-ink'
       }`}
     >
-      <Glyph tariff={tariff} width="w-1/2" />
+      <span className={`text-lg font-medium leading-tight ${tone}`}>{tariff.name}</span>
 
-      <span className={`relative text-lg font-medium leading-tight ${tone}`}>{tariff.name}</span>
+      <span className="flex items-start">{recommended && <Recommended />}</span>
 
-      <span className="relative flex items-start">{recommended && <Recommended />}</span>
-
-      <span className="relative font-mono text-xs leading-6 text-muted">
+      <span className="font-mono text-xs leading-6 text-muted">
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
-      <span className="relative text-xs leading-tight text-muted">{tariff.method}</span>
+      <Glyph tariff={tariff} />
 
-      <span className="relative border-t border-rule pt-3">
+      <span className="border-t border-rule pt-3">
         <span className={`block font-mono text-lg ${tone}`}>{formatPrice(tariff.price)}</span>
         {recommended && <Note />}
       </span>

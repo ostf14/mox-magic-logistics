@@ -16,7 +16,7 @@ export function Rules() {
         <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {rules.map((rule) => (
             <article key={rule.id}>
-              <RuleIcon src={rule.image} alt={rule.title} />
+              <RuleIcon src={rule.image} alt={rule.title} dense={rule.dense} />
               <h3 className="mt-6 text-sm font-medium leading-tight text-ink">{rule.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{rule.text}</p>
             </article>

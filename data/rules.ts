@@ -4,6 +4,8 @@ export type Rule = {
   text: string
   /** Иллюстрация правила в public/images/glyphs. */
   image: string
+  /** Плотная штриховка: вес выравнивается с остальными непрозрачностью. */
+  dense?: boolean
 }
 
 export const rules: Rule[] = [
@@ -24,6 +26,7 @@ export const rules: Rule[] = [
     title: 'Есть закрытые адреса',
     text: 'Каэр Морхен, Аретуза и закрытые участки Велена, список обновляется еженедельно',
     image: '/images/glyphs/gate.jpg',
+    dense: true,
   },
   {
     id: 'undo',
@@ -42,5 +45,6 @@ export const rules: Rule[] = [
     title: 'Хранение семь суток',
     text: 'невостребованное отправление утилизируется в присутствии двух свидетелей',
     image: '/images/glyphs/hourglass.jpg',
+    dense: true,
   },
 ]
