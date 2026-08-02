@@ -64,7 +64,7 @@ export function Hero() {
             </form>
           </div>
 
-          <HeroImage />
+          <HeroImage src="/images/cargo/hero.jpg" alt="Курьер верхом с посылками" />
         </div>
       </div>
 
