@@ -24,19 +24,29 @@ const ROWS = 'grid-rows-[2rem_1.5rem_1.5rem_2.5rem_auto]'
 const GLYPH_SIDE = 320
 
 /**
- * Иллюстрация тарифа фоном в правом нижнем углу. Светлый фон исходника
- * растворяется умножением, альфа не вырезается.
+ * Высота зоны иллюстрации: от верха плитки до разделительной линии перед
+ * ценой. Складывается из строк ROWS с отступами и верхнего padding.
+ */
+const GLYPH_ZONE = 'h-[9.5rem]'
+
+/**
+ * Иллюстрация тарифа фоном в правом верхнем поле, целиком над разделителем.
+ * Светлый фон исходника растворяется умножением, альфа не вырезается.
  */
 function Glyph({ tariff, width }: { tariff: Tariff; width: string }) {
   return (
-    <Image
-      src={tariff.image}
-      alt=""
+    <span
       aria-hidden
-      width={GLYPH_SIDE}
-      height={GLYPH_SIDE}
-      className={`pointer-events-none absolute bottom-0 right-0 ${width} object-contain opacity-15 mix-blend-multiply`}
-    />
+      className={`pointer-events-none absolute right-0 top-0 ${width} ${GLYPH_ZONE} block`}
+    >
+      <Image
+        src={tariff.image}
+        alt=""
+        width={GLYPH_SIDE}
+        height={GLYPH_SIDE}
+        className="h-full w-full object-contain object-right-bottom opacity-15 mix-blend-multiply"
+      />
+    </span>
   )
 }
 

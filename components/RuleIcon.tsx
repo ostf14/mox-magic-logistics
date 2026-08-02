@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-const ICON_SIDE = 192
+const ICON_SIDE = 280
 
 /**
  * Иллюстрация правила. Фон у исходников светлый и разный, поэтому вместо
@@ -8,7 +8,7 @@ const ICON_SIDE = 192
  */
 export function RuleIcon({ src, alt = '' }: { src?: string; alt?: string }) {
   return (
-    <div className={`relative h-24 w-24 overflow-hidden ${src ? '' : 'bg-paper-shade'}`}>
+    <div className={`relative h-[8.75rem] w-[8.75rem] overflow-hidden ${src ? '' : 'bg-paper-shade'}`}>
       {src && (
         <Image
           src={src}

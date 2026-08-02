@@ -17,7 +17,7 @@ export function Rules() {
           {rules.map((rule) => (
             <article key={rule.id}>
               <RuleIcon src={rule.image} alt={rule.title} />
-              <h3 className="mt-4 text-sm font-medium leading-tight text-ink">{rule.title}</h3>
+              <h3 className="mt-6 text-sm font-medium leading-tight text-ink">{rule.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{rule.text}</p>
             </article>
           ))}
