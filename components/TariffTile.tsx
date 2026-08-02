@@ -24,19 +24,20 @@ const ROWS = 'grid-rows-[2rem_1.5rem_1.5rem_auto_auto]'
 const GLYPH_SIDE = 320
 
 /**
- * Иллюстрация тарифа в свободной зоне между сроком и разделителем: справа,
- * ничем не перекрыта, размер от ширины плитки. Светлый фон исходника
- * растворяется умножением, альфа не вырезается.
+ * Иллюстрация тарифа в свободной зоне между сроком и разделителем. Зона
+ * раздвинута до краёв плитки (-mx-4 гасит padding), изображение по центру по
+ * обеим осям, ширина — доля ширины плитки. Светлый фон исходника растворяется
+ * умножением, альфа не вырезается.
  */
-function Glyph({ tariff }: { tariff: Tariff }) {
+function Glyph({ tariff, width }: { tariff: Tariff; width: string }) {
   return (
-    <span aria-hidden className="my-2 block aspect-square w-[70%] max-w-[11rem] justify-self-end">
+    <span aria-hidden className="-mx-4 my-2 flex items-center justify-center">
       <Image
         src={tariff.image}
         alt=""
         width={GLYPH_SIDE}
         height={GLYPH_SIDE}
-        className="h-full w-full object-contain opacity-15 mix-blend-multiply"
+        className={`${width} h-auto max-w-[15rem] object-contain opacity-15 mix-blend-multiply`}
       />
     </span>
   )
@@ -76,7 +77,7 @@ export function TariffCard({
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
-      <Glyph tariff={tariff} />
+      <Glyph tariff={tariff} width="w-4/5" />
 
       <span className="border-t border-rule pt-3">
         <span className="block font-mono text-lg text-ink">{formatPrice(tariff.price)}</span>
@@ -115,7 +116,7 @@ export function TariffTile({
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
-      <Glyph tariff={tariff} />
+      <Glyph tariff={tariff} width="w-[70%]" />
 
       <span className="border-t border-rule pt-3">
         <span className={`block font-mono text-lg ${tone}`}>{formatPrice(tariff.price)}</span>

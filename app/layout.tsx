@@ -1,11 +1,21 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
+import { IBM_Plex_Mono, IBM_Plex_Sans, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
 const ui = IBM_Plex_Sans({
   variable: '--font-ui',
   subsets: ['latin', 'cyrillic'],
   weight: ['400', '500', '600'],
+})
+
+/**
+ * Логотип и только он. DM Serif Display взять не вышло: у него нет
+ * кириллического сабсета, «Плотва» ушла бы в системный фоллбэк.
+ */
+const display = Playfair_Display({
+  variable: '--font-display',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500'],
 })
 
 const numeric = IBM_Plex_Mono({
@@ -26,7 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${ui.variable} ${numeric.variable} antialiased`}>{children}</body>
+      <body className={`${ui.variable} ${numeric.variable} ${display.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }
