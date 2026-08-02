@@ -2,50 +2,67 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import {
+  checks,
+  decisions,
+  entries,
+  harness,
+  palette,
+  PALETTE_NOTE,
+  prompts,
+  roles,
+  rules,
+  stack,
+  typeScale,
+  weakSpots,
+  WORKLOG_HEAD,
+  WORKLOG_REPO,
+  type DefRow,
+} from '@/data/worklog'
+
 const PANEL_LABEL = 'AI Worklog'
 const COMMAND = '$ cat worklog.md'
-/** Заглушка: содержимое лога заполняется отдельно. */
-const STUB = '—'
-const STUB_TIME = '--:--'
-
-type LogEntry = {
-  time: string
-  stage: string
-  env: string
-  lines: string[]
-}
-
-const ENTRIES: LogEntry[] = [
-  { time: STUB_TIME, stage: 'concept', env: STUB, lines: [STUB, STUB] },
-  { time: STUB_TIME, stage: 'copy', env: STUB, lines: [STUB, STUB] },
-  { time: STUB_TIME, stage: 'ia', env: STUB, lines: [STUB, STUB] },
-  { time: STUB_TIME, stage: 'visual', env: STUB, lines: [STUB, STUB] },
-  { time: STUB_TIME, stage: 'build', env: STUB, lines: [STUB, STUB] },
-  { time: STUB_TIME, stage: 'cargo', env: STUB, lines: [STUB, STUB] },
-  { time: STUB_TIME, stage: 'qa', env: STUB, lines: [STUB, STUB] },
-]
-
-const SECTIONS: { title: string; lines: string[] }[] = [
-  {
-    title: '## СТЕК',
-    lines: [
-      'Next.js 15, App Router · TypeScript · Tailwind v4',
-      'Vercel, сборка с main',
-      'IBM Plex Sans и IBM Plex Mono через next/font/google',
-    ],
-  },
-  { title: '## ХАРНЕС', lines: [STUB, STUB, STUB] },
-  { title: '## ПРОМТЫ', lines: [STUB, STUB, STUB] },
-]
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-function Line({ text }: { text: string }) {
+/** Пункт списка: тире висит в поле, текст переносится ровным блоком. */
+function Item({ text, indent = '' }: { text: string; indent?: string }) {
   return (
-    <p className="flex gap-2 pl-[7rem] text-terminal-muted">
-      <span aria-hidden>─</span>
+    <p className={`flex gap-2 ${indent}`}>
+      <span aria-hidden className="shrink-0 text-terminal-muted">
+        ─
+      </span>
       <span>{text}</span>
     </p>
+  )
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-10">
+      <h3 className="text-terminal-muted">## {title}</h3>
+      <div className="mt-3 space-y-3">{children}</div>
+    </section>
+  )
+}
+
+/** Две колонки: подпись фиксированной ширины и многострочное значение. */
+function Definitions({ rows }: { rows: DefRow[] }) {
+  return (
+    <dl className="space-y-2">
+      {rows.map((row, index) => (
+        <div key={`${row.label}-${index}`} className="flex flex-wrap gap-x-4 sm:flex-nowrap">
+          <dt className="w-[7.5rem] shrink-0 text-terminal-muted">{row.label}</dt>
+          <dd>
+            {row.value.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </dd>
+        </div>
+      ))}
+    </dl>
   )
 }
 
@@ -130,7 +147,7 @@ export function Worklog() {
           role="dialog"
           aria-modal="true"
           aria-label={PANEL_LABEL}
-          className="h-full w-screen overflow-y-auto bg-terminal-bg px-5 py-6 font-mono text-xs leading-relaxed text-terminal-text md:w-[40rem] md:px-8"
+          className="h-full w-screen overflow-y-auto bg-terminal-bg px-5 py-6 font-mono text-xs leading-relaxed text-terminal-text md:w-[44rem] md:px-8"
         >
           <div className="flex items-start justify-between gap-6">
             <p>{COMMAND}</p>
@@ -144,38 +161,106 @@ export function Worklog() {
             </button>
           </div>
 
-          <div className="mt-8 space-y-6">
-            {ENTRIES.map((entry) => (
-              <div key={entry.stage}>
-                <p className="flex flex-wrap gap-x-6">
-                  <span className="w-[5.5rem] shrink-0">[{entry.time}]</span>
-                  <span className="w-40 shrink-0">{entry.stage}</span>
-                  <span className="text-terminal-muted">{entry.env}</span>
-                </p>
-                {entry.lines.map((line, index) => (
-                  <Line key={`${entry.stage}-${index}`} text={line} />
-                ))}
-              </div>
-            ))}
+          <div className="mt-8 border-b border-terminal-muted pb-6">
+            <p>{WORKLOG_HEAD}</p>
+            <a
+              href={WORKLOG_REPO}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-1 block break-all text-terminal-muted underline underline-offset-2 hover:text-terminal-text"
+            >
+              {WORKLOG_REPO}
+            </a>
           </div>
 
-          <div className="mt-10 space-y-6">
-            {SECTIONS.map((section) => (
-              <div key={section.title}>
-                <p className="text-terminal-muted">{section.title}</p>
-                <div className="mt-2">
-                  {section.lines.map((line, index) => (
-                    <p key={`${section.title}-${index}`} className="flex gap-2 text-terminal-text">
-                      <span aria-hidden className="text-terminal-muted">
-                        ─
-                      </span>
-                      <span>{line}</span>
-                    </p>
+          <div className="mt-8 space-y-6">
+            {entries.map((entry) => (
+              <div key={entry.number}>
+                <p className="flex flex-wrap gap-x-6">
+                  <span className="w-10 shrink-0">[{entry.number}]</span>
+                  <span className="w-28 shrink-0">{entry.stage}</span>
+                  <span className="text-terminal-muted">{entry.env}</span>
+                </p>
+                <div className="mt-1 space-y-1">
+                  {entry.lines.map((line) => (
+                    <Item key={line} text={line} indent="sm:pl-16" />
                   ))}
                 </div>
               </div>
             ))}
           </div>
+
+          <Section title="СТЕК">
+            <Definitions rows={stack} />
+          </Section>
+
+          <Section title="ХАРНЕС">
+            <Definitions rows={harness} />
+          </Section>
+
+          <Section title="ПРОМТЫ">
+            {prompts.map((prompt) => (
+              <div key={prompt.title} className="space-y-1">
+                <Item text={prompt.title} />
+                <p className="border-l border-terminal-muted pl-4 text-terminal-muted">
+                  «{prompt.body}»
+                </p>
+              </div>
+            ))}
+          </Section>
+
+          <Section title="РЕШЕНИЯ">
+            {decisions.map((line) => (
+              <Item key={line} text={line} />
+            ))}
+          </Section>
+
+          <Section title="СЛАБЫЕ МЕСТА И ЧТО С НИМИ">
+            {weakSpots.map((line) => (
+              <Item key={line} text={line} />
+            ))}
+          </Section>
+
+          <Section title="ПРОВЕРКА">
+            {checks.map((line) => (
+              <Item key={line} text={line} />
+            ))}
+          </Section>
+
+          <Section title="ДИЗАЙН-СИСТЕМА">
+            {palette.map((group) => (
+              <div key={group.group}>
+                <p className="text-terminal-muted">{group.group}</p>
+                <ul className="mt-1 space-y-1">
+                  {group.swatches.map((swatch) => (
+                    <li key={swatch.token} className="flex items-center gap-3">
+                      <span
+                        aria-hidden
+                        style={{ background: `var(${swatch.token})` }}
+                        className="h-4 w-4 shrink-0 border border-terminal-muted"
+                      />
+                      <span className="w-[7.5rem] shrink-0">{swatch.token}</span>
+                      <span className="text-terminal-muted">{swatch.value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <p className="text-terminal-muted">{PALETTE_NOTE}</p>
+
+            <div className="pt-3">
+              <Definitions rows={typeScale} />
+            </div>
+
+            <div className="pt-3">
+              <Definitions rows={roles} />
+            </div>
+
+            <div className="pt-3">
+              <Definitions rows={rules} />
+            </div>
+          </Section>
         </div>
       </div>
     </>

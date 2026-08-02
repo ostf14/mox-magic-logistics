@@ -15,24 +15,24 @@ type TariffTileProps = {
 }
 
 /**
- * Строки плитки заданы жёстко: название, бейдж, срок, иллюстрация и цена
+ * Строки плитки заданы жёстко: название со сроком, бейдж, иллюстрация и цена
  * выравниваются по одним линиям во всех четырёх плитках. Строка бейджа есть
  * и там, где бейджа нет, — иначе плитки разъезжаются по ширине.
  */
-const ROWS = 'grid-rows-[2rem_1.5rem_1.5rem_auto_auto]'
+const ROWS = 'grid-rows-[2rem_1.5rem_auto_auto]'
 
 const GLYPH_SIDE = 320
 
 /**
- * Иллюстрация тарифа в свободной зоне между сроком и разделителем. Зона
+ * Иллюстрация тарифа в свободной зоне между бейджем и разделителем. Зона
  * раздвинута до краёв плитки (-mx-4 гасит padding), изображение по центру по
- * обеим осям, ширина — доля ширины плитки. Верхний отступ опускает картинку
- * внутри зоны: в витрине она стояла слишком высоко над разделителем. Светлый
- * фон исходника растворяется умножением, альфа не вырезается.
+ * обеим осям, ширина — доля ширины плитки. Отступы разные: сверху зону уже
+ * поднимает пустая строка бейджа, поэтому просвет до заголовка и просвет до
+ * разделителя выходят равными. Светлый фон растворяется умножением.
  */
-function Glyph({ tariff, width, top = 'mt-2' }: { tariff: Tariff; width: string; top?: string }) {
+function Glyph({ tariff, width }: { tariff: Tariff; width: string }) {
   return (
-    <span aria-hidden className={`-mx-4 mb-2 ${top} flex items-center justify-center`}>
+    <span aria-hidden className="-mx-4 mb-8 mt-1 flex items-center justify-center">
       <Image
         src={tariff.image}
         alt=""
@@ -40,6 +40,16 @@ function Glyph({ tariff, width, top = 'mt-2' }: { tariff: Tariff; width: string;
         height={GLYPH_SIDE}
         className={`${width} h-auto max-w-[15rem] object-contain opacity-15 mix-blend-multiply`}
       />
+    </span>
+  )
+}
+
+/** Название и срок на одной базовой линии: срок прижат к правому краю. */
+function Head({ name, minutes, tone }: { name: string; minutes: number; tone: string }) {
+  return (
+    <span className="flex items-baseline justify-between gap-3">
+      <span className={`text-lg font-medium leading-tight ${tone}`}>{name}</span>
+      <span className="shrink-0 font-mono text-xs text-muted">{formatDuration(minutes)}</span>
     </span>
   )
 }
@@ -70,15 +80,11 @@ export function TariffCard({
 }) {
   return (
     <div className={`grid h-full ${ROWS} content-start gap-y-1 bg-card p-4`}>
-      <span className="text-lg font-medium leading-tight text-ink">{tariff.name}</span>
+      <Head name={tariff.name} minutes={tariff.deliveryMinutes} tone="text-ink" />
 
       <span className="flex items-start">{recommended && <Recommended />}</span>
 
-      <span className="font-mono text-xs leading-6 text-muted">
-        {formatDuration(tariff.deliveryMinutes)}
-      </span>
-
-      <Glyph tariff={tariff} width="w-4/5" top="mt-12" />
+      <Glyph tariff={tariff} width="w-4/5" />
 
       <span className="border-t border-rule pt-3">
         <span className="block font-mono text-lg text-ink">{formatPrice(tariff.price)}</span>
@@ -109,13 +115,9 @@ export function TariffTile({
         disabled ? 'cursor-not-allowed border-dashed bg-transparent' : 'bg-card hover:border-ink'
       }`}
     >
-      <span className={`text-lg font-medium leading-tight ${tone}`}>{tariff.name}</span>
+      <Head name={tariff.name} minutes={tariff.deliveryMinutes} tone={tone} />
 
       <span className="flex items-start">{recommended && <Recommended />}</span>
-
-      <span className="font-mono text-xs leading-6 text-muted">
-        {formatDuration(tariff.deliveryMinutes)}
-      </span>
 
       <Glyph tariff={tariff} width="w-[80%]" />
 
