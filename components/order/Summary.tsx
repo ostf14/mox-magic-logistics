@@ -88,7 +88,7 @@ export function SummaryBar({
   onAction: () => void
 }) {
   return (
-    <div className="sticky bottom-0 z-10 -mx-5 mt-8 flex items-center justify-between gap-4 border-t border-rule bg-paper px-5 py-3 shadow-[0_-2px_6px_rgba(26,26,24,0.06)] md:hidden">
+    <div className="sticky bottom-0 z-10 -mx-5 mt-8 flex items-center justify-between gap-4 border-t border-rule bg-card px-5 py-3 shadow-[0_-2px_6px_color-mix(in_srgb,var(--ink)_6%,transparent)] md:hidden">
       <span className="font-mono text-sm text-ink">{formatPrice(total)}</span>
       <button
         type="button"

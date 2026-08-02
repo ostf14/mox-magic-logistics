@@ -45,7 +45,7 @@ export function Hero() {
             </div>
 
             <form onSubmit={handleTrack} className="mt-10 max-w-md">
-              <div className="flex items-stretch border border-rule bg-card">
+              <div className="flex items-stretch border border-rule bg-paper">
                 <input
                   value={trackingNumber}
                   onChange={(event) => setTrackingNumber(event.target.value)}
