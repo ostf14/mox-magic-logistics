@@ -26,12 +26,13 @@ const GLYPH_SIDE = 320
 /**
  * Иллюстрация тарифа в свободной зоне между сроком и разделителем. Зона
  * раздвинута до краёв плитки (-mx-4 гасит padding), изображение по центру по
- * обеим осям, ширина — доля ширины плитки. Светлый фон исходника растворяется
- * умножением, альфа не вырезается.
+ * обеим осям, ширина — доля ширины плитки. Верхний отступ опускает картинку
+ * внутри зоны: в витрине она стояла слишком высоко над разделителем. Светлый
+ * фон исходника растворяется умножением, альфа не вырезается.
  */
-function Glyph({ tariff, width }: { tariff: Tariff; width: string }) {
+function Glyph({ tariff, width, top = 'mt-2' }: { tariff: Tariff; width: string; top?: string }) {
   return (
-    <span aria-hidden className="-mx-4 my-2 flex items-center justify-center">
+    <span aria-hidden className={`-mx-4 mb-2 ${top} flex items-center justify-center`}>
       <Image
         src={tariff.image}
         alt=""
@@ -77,7 +78,7 @@ export function TariffCard({
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
-      <Glyph tariff={tariff} width="w-4/5" />
+      <Glyph tariff={tariff} width="w-4/5" top="mt-12" />
 
       <span className="border-t border-rule pt-3">
         <span className="block font-mono text-lg text-ink">{formatPrice(tariff.price)}</span>
@@ -116,7 +117,7 @@ export function TariffTile({
         {formatDuration(tariff.deliveryMinutes)}
       </span>
 
-      <Glyph tariff={tariff} width="w-[70%]" />
+      <Glyph tariff={tariff} width="w-[80%]" />
 
       <span className="border-t border-rule pt-3">
         <span className={`block font-mono text-lg ${tone}`}>{formatPrice(tariff.price)}</span>

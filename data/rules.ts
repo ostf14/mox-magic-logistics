@@ -4,8 +4,6 @@ export type Rule = {
   text: string
   /** Иллюстрация правила в public/images/glyphs. */
   image: string
-  /** Плотная штриховка: вес выравнивается с остальными непрозрачностью. */
-  dense?: boolean
 }
 
 export const rules: Rule[] = [
@@ -22,29 +20,15 @@ export const rules: Rule[] = [
     image: '/images/glyphs/stamp.jpg',
   },
   {
-    id: 'gate',
-    title: 'Есть закрытые адреса',
-    text: 'Каэр Морхен, Аретуза и закрытые участки Велена, список обновляется еженедельно',
-    image: '/images/glyphs/gate.jpg',
-    dense: true,
-  },
-  {
-    id: 'undo',
-    title: 'Отмена в течение часа',
-    text: 'Белый мёд отменяет заклинание, применённое не ранее часа назад',
-    image: '/images/glyphs/undo.jpg',
-  },
-  {
     id: 'candle',
     title: 'Класс IV — до 18:00',
     text: 'позднее этого времени сопровождение чародея недоступно',
     image: '/images/glyphs/candle.jpg',
   },
   {
-    id: 'hourglass',
+    id: 'storage',
     title: 'Хранение семь суток',
     text: 'невостребованное отправление утилизируется в присутствии двух свидетелей',
-    image: '/images/glyphs/hourglass.jpg',
-    dense: true,
+    image: '/images/glyphs/undo.jpg',
   },
 ]
