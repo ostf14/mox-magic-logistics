@@ -104,8 +104,7 @@ export const stack: DefRow[] = [
   {
     label: 'Шрифты',
     value: [
-      'Playfair Display — логотип',
-      'IBM Plex Sans — интерфейс',
+      'IBM Plex Sans — логотип и интерфейс',
       'IBM Plex Mono — числа, время, коды',
     ],
   },
@@ -253,6 +252,6 @@ export const rules: DefRow[] = [
   { label: 'Разделение', value: ['рамками 1px, не тенями'] },
   { label: 'Скругления', value: ['максимум 4px'] },
   { label: 'Тени', value: ['одна на весь проект, на липкой полосе'] },
-  { label: 'Градиенты', value: ['нет'] },
+  { label: 'Градиенты', value: ['только виньетка на изображении груза'] },
   { label: 'Иконки', value: ['нет, только иллюстрации'] },
 ]

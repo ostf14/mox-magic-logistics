@@ -57,7 +57,7 @@ export function buildTimeline(order: TimelineInput, calc: OrderCalc): TimelinePh
       {
         id: 'ready',
         at: ready,
-        title: 'Заклинание готово, опечатано, ожидает курьера',
+        title: 'Зелье готово, опечатано, ожидает курьера',
         state: 'done',
       },
     ],

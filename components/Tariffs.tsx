@@ -10,7 +10,7 @@ export function Tariffs() {
           Тарифы доставки
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-          Срок считается от момента, когда мастерская передала заклинание курьеру.
+          Срок считается от момента, когда мастерская передала отправление курьеру.
         </p>
 
         <div className="mt-8 grid gap-px border border-rule bg-rule sm:grid-cols-2 md:grid-cols-4">

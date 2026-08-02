@@ -25,7 +25,7 @@ export function Hero() {
         <div className="grid w-full gap-12 md:grid-cols-2 md:items-center md:gap-16">
           <div>
             <h1 className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
-              Доставляем заклинания
+              Доставляем заклинания и зелья
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">

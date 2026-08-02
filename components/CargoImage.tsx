@@ -41,14 +41,16 @@ export function CargoImage({ name, src, badge, thumb }: CargoImageProps) {
   return (
     <figure className="relative aspect-[2/1] w-full overflow-hidden bg-paper-shade">
       {src && (
-        <Image
-          src={src}
-          alt={name}
-          width={IMAGE_WIDTH}
-          height={IMAGE_HEIGHT}
-          sizes={IMAGE_SIZES}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+        <span className="cargo-vignette absolute inset-0 block">
+          <Image
+            src={src}
+            alt={name}
+            width={IMAGE_WIDTH}
+            height={IMAGE_HEIGHT}
+            sizes={IMAGE_SIZES}
+            className="h-full w-full object-cover"
+          />
+        </span>
       )}
 
       {badge && (

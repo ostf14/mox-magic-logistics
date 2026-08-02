@@ -24,6 +24,8 @@
 
   /* Высота шапки: первый экран занимает вьюпорт за её вычетом. */
   --header-height: 5rem;
+  /* Высота бегущей строки: рамка 1px + два отступа 0.5rem + строка 1rem. */
+  --ticker-height: 2.0625rem;
 }
 
 @theme inline {
@@ -46,8 +48,6 @@
 
   --font-sans: var(--font-ui);
   --font-mono: var(--font-numeric);
-  /* Дисплейный сериф только под логотип: шапка и подвал. */
-  --font-logo: var(--font-display);
 
   /* Скругления больше 4px запрещены. */
   --radius-xs: 2px;
@@ -58,6 +58,24 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+/*
+ * Виньетка на изображении груза. Затемнение тёплое: чернила подмешаны в
+ * подложку, не серое и не чёрное. По краю не плотнее 8%, к центру полностью
+ * прозрачное, переход начинается с 60% радиуса.
+ */
+.cargo-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    color-mix(in srgb, var(--ink) 50%, var(--paper-shade)) 100%
+  );
 }
 
 /* Бегущая строка операционной сводки. Лента продублирована, сдвиг на половину. */

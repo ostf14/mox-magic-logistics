@@ -38,7 +38,7 @@ function Glyph({ tariff, width }: { tariff: Tariff; width: string }) {
         alt=""
         width={GLYPH_SIDE}
         height={GLYPH_SIDE}
-        className={`${width} h-auto max-w-[15rem] object-contain opacity-15 mix-blend-multiply`}
+        className={`${width} h-auto max-w-[15rem] object-contain opacity-30 mix-blend-multiply`}
       />
     </span>
   )

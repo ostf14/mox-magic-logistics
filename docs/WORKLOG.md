@@ -79,8 +79,7 @@ https://github.com/ostf14/mox-magic-logistics
 ```
 Фреймворк      Next.js 15, App Router, TypeScript
 Стили          Tailwind v4, без UI-библиотек
-Шрифты         Playfair Display — логотип
-               IBM Plex Sans — интерфейс
+Шрифты         IBM Plex Sans — логотип и интерфейс
                IBM Plex Mono — числа, время, коды
 Хостинг        Vercel, автосборка с main
 ```
@@ -286,6 +285,6 @@ https://github.com/ostf14/mox-magic-logistics
 Разделение     рамками 1px, не тенями
 Скругления     максимум 4px
 Тени           одна на весь проект, на липкой полосе
-Градиенты      нет
+Градиенты      только виньетка на изображении груза
 Иконки         нет, только иллюстрации
 ```

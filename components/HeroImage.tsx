@@ -13,18 +13,26 @@ const IMAGE_SIZES = '(max-width: 768px) 0px, 50vw'
  * наклон и прозрачные поля заданы в самом файле.
  */
 /**
- * Кадр выше текстовой колонки, поэтому он вынут из потока и центрируется по
- * её середине — через inset-0 и my-auto, а не через transform: трансформ
- * создал бы контекст наложения и погасил multiply, светлый лист исходника
- * перестал бы растворяться. Потолок высоты — секция за вычетом шапки и ленты.
+ * Кадр вынут из потока и центрируется по середине текстовой колонки — через
+ * inset-y-0 и my-auto, а не через transform: трансформ создал бы контекст
+ * наложения и погасил multiply, светлый лист исходника перестал бы
+ * растворяться.
+ *
+ * Высота считается от секции, а не от текстовой колонки: вьюпорт минус шапка
+ * минус лента. Ширину задаёт высота через пропорции файла; кадру разрешено
+ * уходить левее середины ровно на межколоночный зазор — дальше начинается
+ * текстовая колонка, и кадр перекрыл бы строки. Отступ справа держит кадр в
+ * стороне от ярлыка шторки, пока контентная колонка прижата к краю окна.
  */
-const FRAME_HEIGHT = 'h-[min(34rem,calc(100svh-var(--header-height)-13rem))]'
+const FRAME_HEIGHT = 'h-[calc(100svh-var(--header-height)-var(--ticker-height))]'
 
 export function HeroImage({ src, alt = '' }: { src?: string; alt?: string }) {
   return (
     <div className="relative hidden h-full min-h-[24rem] md:block">
       {src && (
-        <div className={`absolute inset-0 my-auto ${FRAME_HEIGHT} min-h-[24rem]`}>
+        <div
+          className={`absolute inset-y-0 right-0 my-auto w-[calc(100%+4rem)] pr-12 ${FRAME_HEIGHT} min-h-[24rem] xl:pr-0`}
+        >
           <Image
             src={src}
             alt={alt}
