@@ -1,31 +1,6 @@
-import { RuleIcon } from './RuleIcon'
+import { rules } from '@/data/rules'
 
-const RULES = [
-  {
-    title: 'Не вскрывать до применения',
-    text: 'вскрытое заранее заклинание службой не возмещается',
-  },
-  {
-    title: 'Печать ставится при курьере',
-    text: 'повреждённая или чужая печать даёт право отказать в перевозке',
-  },
-  {
-    title: 'Есть закрытые адреса',
-    text: 'Каэр Морхен, Аретуза и закрытые участки Велена, список обновляется еженедельно',
-  },
-  {
-    title: 'Отмена в течение часа',
-    text: 'Белый мёд отменяет заклинание, применённое не ранее часа назад',
-  },
-  {
-    title: 'Класс IV — до 18:00',
-    text: 'позднее этого времени сопровождение чародея недоступно',
-  },
-  {
-    title: 'Хранение семь суток',
-    text: 'невостребованное отправление утилизируется в присутствии двух свидетелей',
-  },
-]
+import { RuleIcon } from './RuleIcon'
 
 export function Rules() {
   return (
@@ -39,9 +14,9 @@ export function Rules() {
         </p>
 
         <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {RULES.map((rule) => (
-            <article key={rule.title}>
-              <RuleIcon alt={rule.title} />
+          {rules.map((rule) => (
+            <article key={rule.id}>
+              <RuleIcon src={rule.image} alt={rule.title} />
               <h3 className="mt-4 text-sm font-medium leading-tight text-ink">{rule.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{rule.text}</p>
             </article>

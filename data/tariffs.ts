@@ -6,6 +6,8 @@ export type Tariff = {
   price: number
   /** Название строки в чеке и в разбивке срока. */
   lineLabel: string
+  /** Иллюстрация тарифа в public/images/glyphs. */
+  image: string
 }
 
 export const tariffs: Tariff[] = [
@@ -16,6 +18,7 @@ export const tariffs: Tariff[] = [
     deliveryMinutes: 4320,
     price: 12,
     lineLabel: 'Пешая доставка',
+    image: '/images/glyphs/foot.jpg',
   },
   {
     id: 'horse',
@@ -24,6 +27,7 @@ export const tariffs: Tariff[] = [
     deliveryMinutes: 1440,
     price: 30,
     lineLabel: 'Конная доставка',
+    image: '/images/glyphs/horse.jpg',
   },
   {
     id: 'griffin',
@@ -32,6 +36,7 @@ export const tariffs: Tariff[] = [
     deliveryMinutes: 360,
     price: 85,
     lineLabel: 'Доставка грифоном',
+    image: '/images/glyphs/griffin.jpg',
   },
   {
     id: 'portal',
@@ -40,6 +45,7 @@ export const tariffs: Tariff[] = [
     deliveryMinutes: 60,
     price: 240,
     lineLabel: 'Портальная доставка',
+    image: '/images/glyphs/portal.jpg',
   },
 ]
 
